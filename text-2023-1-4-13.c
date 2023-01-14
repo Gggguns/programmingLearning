@@ -36,4 +36,4 @@ int main()
 	if(flat==0)
 		printf("²»´æÔÚ%d", n);
 	return 0;
-}
+} 
