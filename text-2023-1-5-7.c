@@ -11,7 +11,7 @@ int cmp2(const void* e1, const void* e2)
 {
 	return *(char*)e1 - *(char*)e2; 
 }//字符型的比较
-struct stu
+struct stu 
 {
 	char name[20];
 	int age;
