@@ -10,7 +10,7 @@ int my_strlen1(const char* str)
 		str++;
 		ret++;
 	}
-	return ret;
+	return ret; 
 }
 //µİ¹é
 int my_strlen2(const char* str)
