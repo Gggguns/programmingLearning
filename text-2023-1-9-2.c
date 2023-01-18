@@ -6,7 +6,7 @@ char* my_strcpy(char* des, const char* res)
 	assert(des && res);
 	char* ret = des;
 	while (*des++ = *res++)
-	{
+	{ 
 		;
 	}
 	return ret; 
