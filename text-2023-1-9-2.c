@@ -9,7 +9,7 @@ char* my_strcpy(char* des, const char* res)
 	{
 		;
 	}
-	return ret;
+	return ret; 
 }
 int main()
 {
