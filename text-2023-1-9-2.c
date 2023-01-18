@@ -7,7 +7,7 @@ char* my_strcpy(char* des, const char* res)
 	char* ret = des;
 	while (*des++ = *res++)
 	{
-		; 
+		;
 	}
 	return ret;
 }
