@@ -9,7 +9,7 @@ void* my_memcpy(void* des, const void *sce, size_t num)
 		*(char*)des = *(char*)sce;
 		des = (char*)des + 1;
 		sce = (char*)sce + 1;
-	}
+	} 
 	return ret;
 }
 void text1()
