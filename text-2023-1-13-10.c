@@ -8,7 +8,7 @@ void check_solo(int arr[],int sz)
 	{
 		flat = 1;
 		for (j = 0;j < sz;j++)
-		{
+		{ 
 			if (i == j)
 				continue;
 			else if (arr[i] == arr[j])
