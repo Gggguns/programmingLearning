@@ -2,11 +2,12 @@
 #include"better_contact.h"
 int main()
 {
+	Contact con;
 	Init_contact(&con);
 	int input;
 	do
 	{
-		meun();
+		menu();
 		printf("«Î ‰»Î ˝◊÷;>");
 		scanf("%d", &input);
 		switch (input)
@@ -27,15 +28,17 @@ int main()
 			Show_contact(&con);
 			break;
 		case 6:
-			Clean__contact(&con);
+			Clean_contact(&con);
 			break;
 		case 7:
 			Sort_contact(&con);
+			break;
 		case 0:
 			Save_contact(&con);
 			Destory_contact(&con);
+			break;
 		default:
-			printf(" ‰»Î¥ÌŒÛ");
+			printf(" ‰»Î¥ÌŒÛ\n");
 			break;
 		}
 	} while (input);
