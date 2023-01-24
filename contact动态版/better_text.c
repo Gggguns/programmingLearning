@@ -5,7 +5,7 @@ int main()
 	Contact con;
 	Init_contact(&con);
 	int input;
-	do
+	do 
 	{
 		menu();
 		printf("ÇëÊäÈëÊý×Ö;>");
