@@ -9,7 +9,7 @@ int main() {
         d = getchar();
         if (d == ' ')
         {
-            scanf("%d", &n2);
+            scanf("%d", &n2); 
             if (n1 > n2)
                 printf("%d>%d\n", n1, n2);
             else if (n1 == n2)
