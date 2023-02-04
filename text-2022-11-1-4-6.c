@@ -10,7 +10,7 @@ int main() {
         s = sed;
     }
     else if (sed < 3600)
-    {
+    { 
         s = sed % 60;
         m = sed / 60;
         h = 0;
