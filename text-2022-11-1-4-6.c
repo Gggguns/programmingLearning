@@ -4,7 +4,7 @@ int main() {
     int sed, h, m, s;
     scanf("%d", &sed);
     if (sed < 60)
-    {
+    { 
         h = 0;
         m = 0;
         s = sed;
