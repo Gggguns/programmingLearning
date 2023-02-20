@@ -8,7 +8,7 @@ int Count_one(int num)
 	else if (num < 0)
 	{
 		t = num;
-		while (x--)
+		while (x--) 
 		{
 			if (t < 0)
 				count++;
