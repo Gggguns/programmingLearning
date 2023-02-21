@@ -11,7 +11,7 @@ int main()
 		if(sum1%2==0)
 			if(num<0)
 			{
-				arr1[i] = 1;
+				arr1[i] = 1; 
 				i++;
 			}
 			else
