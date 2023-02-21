@@ -21,7 +21,7 @@ int main()
 			}
 		else
 		{ 
-			if (num < 0)
+			if (num < 0) 
 			{
 				arr2[j] = 1;
 				j++;
