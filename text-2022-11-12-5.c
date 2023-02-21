@@ -12,7 +12,7 @@ int main()
 			if(num<0)
 			{
 				arr1[i] = 1; 
-				i++;
+				i++; 
 			}
 			else
 			{
