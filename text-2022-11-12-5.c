@@ -7,7 +7,7 @@ int main()
 	sum1= sizeof(num) * 8;
 	sum2 = sum1;
 	while (sum1)
-	{
+	{ 
 		if(sum1%2==0)
 			if(num<0)
 			{
