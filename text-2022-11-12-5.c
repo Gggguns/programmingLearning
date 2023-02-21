@@ -20,7 +20,7 @@ int main()
 				i++;
 			}
 		else
-		{
+		{ 
 			if (num < 0)
 			{
 				arr2[j] = 1;
