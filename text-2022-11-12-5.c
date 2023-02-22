@@ -29,7 +29,7 @@ int main()
 			else
 			{
 				arr2[j] = 0;
-				j++;
+				j++; 
 			}
 		}
 		sum1--;
