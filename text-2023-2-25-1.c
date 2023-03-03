@@ -32,7 +32,7 @@ int main()
 	}*/
 	//SListInsertAfter(Ret, 8);
 
-	if (Ret == NULL)
+	if (Ret == NULL) 
 		printf("没有该数据\n");
 	else
 	{
