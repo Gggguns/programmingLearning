@@ -11,7 +11,7 @@ SListNode* BuySListNode(SLTDateType x)
 	}
 	else
 	{
-		NewNode->data = x;
+		NewNode->data = x; 
 		NewNode->next = NULL;
 		return NewNode;
 	}
