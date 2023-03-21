@@ -58,10 +58,33 @@ void QueuePop(Queue* pq)
 		pq->head = pq->head->next;
 		free(cur);
 	}
+	pq->size--;
 }
 
 //队列是否为空
 bool QueueEmpty(Queue* pq)
 {
 	return pq->size == 0;
+}
+
+//队列的长度
+int QueueSize(Queue* pq)
+{
+	return pq->size;
+}
+
+//队列的列首元素
+QueueDataType QueueFront(Queue* pq)
+{
+	assert(pq);
+	assert(pq->head);
+	return pq->head->data;
+}
+
+//队列的列尾元素
+QueueDataType QueueTail(Queue* pq)
+{
+	assert(pq);
+	assert(pq->head);
+	return pq->tail->data;
 }
