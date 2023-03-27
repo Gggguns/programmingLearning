@@ -67,7 +67,12 @@ void HeapPush(Heap* php,HeapDataType x)
 void HeapPop(Heap* php)
 {
 	if(!HeapEmpty(php))
-	php->size--;
+	{
+		Swap(&php->data[0], &php->data[php->size - 1]);
+		php->size--;
+		LargeHeapAdjustDown(php, 0);
+	}
+	
 }
 
 //È¡¶Ñ¶¥ÔªËØ
@@ -120,6 +125,8 @@ void HeapPrintfTopk(Heap* php,int k)
 {
 	while (k--)
 	{
+		if (HeapEmpty(php))
+			return;
 		printf("%d ", php->data[0]);
 		Swap(&php->data[0], &php->data[php->size - 1]);
 		php->size--;
