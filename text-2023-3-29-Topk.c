@@ -19,14 +19,31 @@ void Swap(HeapDataType* p1, HeapDataType* p2)
 	*p2 = tmp;
 }
 
+void AdjustUp(HeapDataType* str, int child)
+{
+	int parent = (child - 1) / 2;
+	while (child > 0)
+	{
+		if (str[child] < str[parent])
+		{
+			Swap(&str[child], &str[parent]);
+		}
+		child = parent;
+		parent = (child - 1) / 2;
+	}
+}
+
 void AdjustDown(HeapDataType* pdata, int parent, int end)
 {
 	int child = parent * 2 + 1;
 	while (child < end)
 	{
-		if (child + 1 < end && pdata[child] > pdata[child + 1])
+		if ((child + 1) < end && pdata[child] > pdata[child + 1])
 			child++;
-		Swap(&pdata[child], &pdata[parent]);
+		if(pdata[child]<pdata[parent])
+			Swap(&pdata[child], &pdata[parent]);
+		parent = child;
+		child = parent * 2 + 1;
 	}
 }
 
@@ -68,22 +85,36 @@ void PrintfTopk(const char*file,int k)
 	}
 	hp.size = 0;
 	hp.capacity = k;
-	int tmp = 0;
-	for (int i = 0;i < 10000;i++)
+	HeapDataType tmp = 0;
+	int i = 0;
+	while (k--)
+	{
+		fscanf(fout, "%d", &hp.data[hp.size]);
+		AdjustUp(hp.data,hp.size);
+		hp.size++;
+	}
+	for ( i = hp.capacity-1;i < 10000;i++)
 	{
 
 		fscanf(fout, "%d", &tmp);
-		if (tmp > hp.data[0])
+		if ((hp.data[0]) < tmp)
 		{
 			hp.data[0] = tmp;
-			AdjustDown()
+			AdjustDown(hp.data, 0, hp.size);
 		}
+	}
+	for (i = 0;i < hp.capacity;i++)
+	{
+		printf("%d ", hp.data[i]);
+		/*Swap(&hp.data[0], &hp.data[hp.size - 1]);*/
+		//hp.size--;
+		//AdjustDown(hp.data, 0, hp.size);
 	}
 }
 int main()
 {
 	const char* file = "data.txt";
-	CreateNData(file);
+	//CreateNData(file);
 	PrintfTopk(file, 10);
 	return 0;
 }
