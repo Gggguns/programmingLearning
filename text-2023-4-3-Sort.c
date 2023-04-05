@@ -92,7 +92,7 @@ void BubbleSort(int* str, int size)
 //©ЛкыеепР
 void QuickSort(int* str, int left, int right)
 {
-	if (right < left)
+	if (right <= left)
 		return;
 	int key = left;
 	int end = right;
