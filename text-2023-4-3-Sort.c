@@ -1,7 +1,26 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include"text-2023-4-3-Sort.h"
 //插入排序
-void InsertSort(int* str, int size);
+void InsertSort(int* str, int size)
+{
+	int i = 0;
+	for(i=0;i<size-1;i++)
+	{
+		int end = i;
+		int tmp = str[i + 1];
+		while (0 <= end)
+		{
+			if (tmp < str[end])
+			{
+				str[end + 1] = str[end];
+				end--;
+			}
+			else
+				break;
+		}
+		str[end + 1] = tmp;
+	}
+}
 
 //希尔排序
 void ShellSort(int* str, int size)
@@ -94,8 +113,16 @@ void QuickSort(int* str, int left, int right)
 {
 	if (right <= left)
 		return;
-	int key = left;
+	int begin = left;
 	int end = right;
+	//随机选key
+	/*int random = left+rand()%(right);
+	Swap(&str[left], &str[random]);*/
+	//三数取中
+	int mid = GetMidNumi(str,left, right);
+	if (mid != left)
+		Swap(&str[mid], &str[left]);
+	int key = left;
 	while (left < right)
 	{
 		while (left < right && str[right] >= str[key])
@@ -105,8 +132,9 @@ void QuickSort(int* str, int left, int right)
 		Swap(&str[left], &str[right]);
 	}
 	Swap(&str[key], &str[left]);
-	QuickSort(str, key, left - 1);
-	QuickSort(str, right + 1, end);
+	key = left;
+	QuickSort(str, begin, key - 1);
+	QuickSort(str, key + 1, end);
 }
 
 //归并排序
@@ -146,51 +174,88 @@ void PrintfArray(int* str, int size)
 	printf("\n");
 }
 
-//各个排序的比较测试
-void TextOP()
+//取中间值
+int GetMidNumi(int* str, int left, int right)
 {
-	int* a1 = (int*)malloc(sizeof(int) * Size);
-	int* a2 = (int*)malloc(sizeof(int) * Size);
-	int* a3 = (int*)malloc(sizeof(int) * Size);
-	int* a4 = (int*)malloc(sizeof(int) * Size);
-	int* a5 = (int*)malloc(sizeof(int) * Size);
-	int* a6 = (int*)malloc(sizeof(int) * Size);
-	int* a7 = (int*)malloc(sizeof(int) * Size);
-	int* a8 = (int*)malloc(sizeof(int) * Size);
-	int* a9 = (int*)malloc(sizeof(int) * Size);
-	int i = 0;
-	srand(time(0));
-	for (i = 0;i < Size;i++)
+	int mid = (left + right) / 2;
+	if (str[left] < str[right])
 	{
-		
-		a1[i] = rand();
-		a2[i] = a1[i];
-		a3[i] = a1[i];
-		a4[i] = a1[i];
-		a5[i] = a1[i];
-		a6[i] = a1[i];
-		a7[i] = a1[i];
-		a8[i] = a1[i];
-		a9[i] = a1[i];
+		if (str[right] < str[mid])
+			return right;
+		else if (str[mid] < str[left])
+			return left;
+		else
+			return mid;
 	}
-	int begin1 = clock();
-	BubbleSort(a1,Size);
-	PrintfArray(a1, Size);
-	int end1 = clock();
-
-
-
-
-
-
-
-	free(a1);
-	free(a2);
-	free(a3);
-	free(a4);
-	free(a5);
-	free(a6);
-	free(a7);
-	free(a8);
-	free(a9);
+	else
+	{
+		if (str[left] < str[mid])
+			return left;
+		else if (str[mid] < str[right])
+			return right;
+		else
+			return mid;
+	}
 }
+
+void QuickSort2(int* str, int left, int right)
+{
+	if (right <= left)
+		return;
+	int begin = left;
+	int end = right;
+	//随机选key
+	/*int random = left+rand()%(right);
+	Swap(&str[left], &str[random]);*/
+	//三重取中
+	int mid = GetMidNumi(str, left, right);
+	if (mid != left)
+		Swap(&str[mid], &str[left]);
+	int key = str[left];
+	int hole = left;
+	while (left < right)
+	{
+		while (left < right && str[right] >= key)
+			right--;
+		str[hole] = str[right];
+		hole = right;
+		while (left < right && str[left] <= key)
+			left++;
+		str[hole] = str[left];
+		hole = left;
+	}
+	str[hole] = key;
+	QuickSort2(str, begin, hole - 1);
+	QuickSort2(str, hole + 1, end);
+}
+
+//void QuickSort3(int* str, int left, int right)
+//{
+//	if (right <= left)
+//		return;
+//	int begin = left;
+//	int end = right;
+//	//随机选key
+//	/*int random = left+rand()%(right);
+//	Swap(&str[left], &str[random]);*/
+//	//三重取中
+//	int mid = GetMidNumi(str, left, right);
+//	if (mid != left)
+//		Swap(&str[mid], &str[left]);
+//	int key = str[left];
+//	int hole = left;
+//	while (left < right)
+//	{
+//		while (left < right && str[right] >= key)
+//			right--;
+//		str[hole] = str[right];
+//		hole = right;
+//		while (left < right && str[left] <= key)
+//			left++;
+//		str[hole] = str[left];
+//		hole = left;
+//	}
+//	str[hole] = key;
+//	QuickSort3(str, begin, hole - 1);
+//	QuickSort3(str, hole + 1, end);
+//}

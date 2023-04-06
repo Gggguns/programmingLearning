@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-#define Size 10
+#define Size 20
 
 //插入排序
 void InsertSort(int* str, int size);
@@ -35,3 +35,9 @@ void TextOP();
 
 //打印数组
 void PrintfArray(int* str, int size);
+
+//取中间值
+int GetMidNumi(int* str, int left, int right);
+
+//挖坑法的快排
+void QuickSort2(int* str, int left, int right);
