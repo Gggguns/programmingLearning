@@ -198,6 +198,7 @@ int GetMidNumi(int* str, int left, int right)
 	}
 }
 
+//挖坑法
 void QuickSort2(int* str, int left, int right)
 {
 	if (right <= left)
@@ -229,33 +230,33 @@ void QuickSort2(int* str, int left, int right)
 	QuickSort2(str, hole + 1, end);
 }
 
-//void QuickSort3(int* str, int left, int right)
-//{
-//	if (right <= left)
-//		return;
-//	int begin = left;
-//	int end = right;
-//	//随机选key
-//	/*int random = left+rand()%(right);
-//	Swap(&str[left], &str[random]);*/
-//	//三重取中
-//	int mid = GetMidNumi(str, left, right);
-//	if (mid != left)
-//		Swap(&str[mid], &str[left]);
-//	int key = str[left];
-//	int hole = left;
-//	while (left < right)
-//	{
-//		while (left < right && str[right] >= key)
-//			right--;
-//		str[hole] = str[right];
-//		hole = right;
-//		while (left < right && str[left] <= key)
-//			left++;
-//		str[hole] = str[left];
-//		hole = left;
-//	}
-//	str[hole] = key;
-//	QuickSort3(str, begin, hole - 1);
-//	QuickSort3(str, hole + 1, end);
-//}
+//前后是指针
+void QuickSort3(int* str, int left, int right)
+{
+	if (right <= left)
+		return;
+	int begin = left;
+	int end = right;
+	//随机选key
+	/*int random = left+rand()%(right);
+	Swap(&str[left], &str[random]);*/
+	//三重取中
+	int mid = GetMidNumi(str, left, right);
+	if (mid != left)
+		Swap(&str[mid], &str[left]);
+	int key = left;
+	int prev=left;
+	int cur=left;
+	while (cur<end)
+	{
+		while (cur < end && str[cur] >= str[key])
+			cur++;
+		while (prev < cur && str[prev] <= str[key])
+			prev++;
+		if (str[cur]<str[key])
+			Swap(&str[cur], &str[prev]);
+	}
+	Swap(&str[prev],&str[key]);
+	QuickSort3(str, begin, prev - 1);
+	QuickSort3(str, prev + 1, end);
+}

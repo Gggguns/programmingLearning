@@ -41,3 +41,6 @@ int GetMidNumi(int* str, int left, int right);
 
 //挖坑法的快排
 void QuickSort2(int* str, int left, int right);
+
+//前后是指针
+void QuickSort3(int* str, int left, int right);

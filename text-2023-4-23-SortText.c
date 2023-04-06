@@ -90,8 +90,9 @@ int main()
 	//HeapSort(arr1, size);
 	//ShellSort(arr1, size);
 	//QuickSort2(arr1, 0, size - 1);
-	/*InsertSort(arr1, size);
-	PrintfArray(arr1, size);*/
+	/*InsertSort(arr1, size);*/
+	QuickSort3(arr1, 0, size - 1);
+	PrintfArray(arr1, size);
 	//TextOP();
 	return 0;
 }
