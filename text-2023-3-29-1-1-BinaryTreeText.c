@@ -35,6 +35,11 @@ int main()
 	BinaryTreeLevelOrder(root);
 	printf("\n");
 
+	//判断是不是完全二叉树
+	if (BinaryTreeComplete(root))
+		printf("是完全二叉树\n");
+	else
+		printf("不是完全二叉树\n");
 	BinaryTreeDestroy(root);
 	return 0;
 }
