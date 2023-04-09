@@ -3,7 +3,6 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<stdbool.h>
-
 typedef char BTDataType;
 
 typedef struct BinaryTreeNode
@@ -14,10 +13,10 @@ typedef struct BinaryTreeNode
 }BTNode;
 
 //前序遍历数组构建二叉树
-BTNode* BinaryTreeCreate(BTDataType* str, int size, int* pi);
+BTNode* BinaryTreeCreate(BTDataType* str, int* pi);
 
 //二叉树的销毁
-void BinaryTreeDestory(BTNode* root);
+void BinaryTreeDestroy(BTNode* root);
 
 //二叉树的节点个数
 int BinaryTreeSize(BTNode* root);
@@ -26,19 +25,19 @@ int BinaryTreeSize(BTNode* root);
 int BinaryTreeLeafSize(BTNode* root);
 
 //二叉树第k层的节点个数
-int BinaryTreeLevelKSize(BTNode* root，(int k));
+int BinaryTreeLevelKSize(BTNode* root, int k);
 
 //二叉树查找值为xd的节点
 BTNode* BinaryTreeFind(BTNode* root, BTDataType x);
 
 //二叉树前序遍历
-void BinaryTreePrevOrder(BTNode* root, BTDataType* str, int* pi);
+void BinaryTreePrevOrder(BTNode* root);
 
 //二叉树中序遍历
-void BinaryTreeInOrder(BTNode* root, BTDataType* str, int* pi);
+void BinaryTreeInOrder(BTNode* root);
 
 //二叉树后序遍历
-void BinaryTreePostOrder(BTNode* root, BTDataType* str, int* pi);
+void BinaryTreePostOrder(BTNode* root);
 
 //二叉树层序遍历
 void BinaryTreeLevelOrder(BTNode* root);
