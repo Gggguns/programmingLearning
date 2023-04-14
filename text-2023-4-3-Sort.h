@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
+#include<string.h>
 #define Size 20
 
 //插入排序
@@ -23,6 +24,7 @@ void BubbleSort(int* str, int size);
 void QuickSort(int* str, int left, int right);
 
 //归并排序
+void MergeSort(int* str, int n);
 
 //交换两个数据
 void Swap(int* p1, int* p2);

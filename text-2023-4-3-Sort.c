@@ -137,7 +137,58 @@ void QuickSort(int* str, int left, int right)
 	QuickSort(str, key + 1, end);
 }
 
+void _Merge(int* str, int begin, int end, int* tmp)
+ {
+	if (begin >= end)
+		return;
+	int mid = (end + begin) / 2;
+	_Merge(str, begin, mid, tmp);
+	_Merge(str, mid + 1, end, tmp);
+	int begin1 = begin;
+	int begin2 = mid + 1;
+	int end1 = mid;
+	int end2 = end;
+	int i = begin;
+	while (begin1 <= end1 && begin2 <= end2)
+	{
+		if (str[begin1] < str[begin2])
+		{
+			tmp[i++] = str[begin1++];
+		}
+		else
+		{
+			tmp[i++] = str[begin2++];
+		}
+	}
+
+	while (begin1 <= end1)
+	{
+		tmp[i++] = str[begin1++];
+	}
+
+	while (begin2 <= end2)
+	{
+		tmp[i++] = str[begin2++];
+	}
+
+	memcpy(str+begin, tmp + begin, sizeof(int) * (end - begin + 1));
+}
+
 //归并排序
+void MergeSort(int* str, int n)
+{
+	int* tmp = (int*)malloc(sizeof(int) * n);
+	if (tmp)
+	{
+		_Merge(str,0,n-1,tmp);
+	}
+	else
+	{
+		perror("malloc fail");
+		return;
+	}
+	free(tmp);
+}
 
 //交换两个数据
 void Swap(int* p1, int* p2)
@@ -246,17 +297,16 @@ void QuickSort3(int* str, int left, int right)
 		Swap(&str[mid], &str[left]);
 	int key = left;
 	int prev=left;
-	int cur=left;
-	while (cur<end)
+	int cur=left+1;
+	while (cur<= end)
 	{
-		while (cur < end && str[cur] >= str[key])
-			cur++;
-		while (prev < cur && str[prev] <= str[key])
-			prev++;
-		if (str[cur]<str[key])
+		if (str[cur] < str[key] && ++prev != cur)
 			Swap(&str[cur], &str[prev]);
+		cur++;
+			
 	}
 	Swap(&str[prev],&str[key]);
 	QuickSort3(str, begin, prev - 1);
 	QuickSort3(str, prev + 1, end);
 }
+
