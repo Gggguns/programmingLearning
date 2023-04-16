@@ -310,3 +310,55 @@ void QuickSort3(int* str, int left, int right)
 	QuickSort3(str, prev + 1, end);
 }
 
+//πÈ≤¢≈≈–Ú∑«µ›πÈ
+void MergeSort2(int* str, int n)
+{
+	int* tmp = (int*)malloc(sizeof(int) * n);
+	if (tmp)
+	{
+		int gap = 1;
+		while (gap < n)
+		{
+			int i = 0;
+			int j = 0;
+			for (j = 0;j < n;j += 2*gap)
+			{
+				int begin1 = j, end1 = j + gap-1;
+				int begin2 = j + gap, end2 = j + 2 * gap - 1;
+				if (n - 1 < begin2)
+					break;
+				if (n - 1 < end2)
+					end2 = n - 1;
+				while (begin1 <= end1 && begin2 <= end2)
+				{
+					if (str[begin1] < str[begin2])
+					{
+						tmp[i++] = str[begin1++];
+					}
+					else
+					{
+						tmp[i++] = str[begin2++];
+					}
+				}
+
+				while (begin1 <= end1)
+				{
+					tmp[i++] = str[begin1++];
+				}
+
+				while (begin2 <= end2)
+				{
+					tmp[i++] = str[begin2++];
+				}
+				memcpy(str + j, tmp + j, sizeof(int) * (end2 - j + 1));
+			}
+			gap*=2;
+		}
+	}
+	else
+	{
+		perror("malloc fail");
+		return;
+	}
+	free(tmp);
+}

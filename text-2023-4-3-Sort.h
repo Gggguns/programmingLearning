@@ -46,3 +46,6 @@ void QuickSort2(int* str, int left, int right);
 
 //前后是指针
 void QuickSort3(int* str, int left, int right);
+
+//归并排序非递归
+void MergeSort2(int* str, int n);
