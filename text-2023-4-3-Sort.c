@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include"text-2023-4-3-Sort.h"
+#include"text-2023-4-3-Stack.h"
 //插入排序
 void InsertSort(int* str, int size)
 {
@@ -362,3 +363,50 @@ void MergeSort2(int* str, int n)
 	}
 	free(tmp);
 }
+
+//快速排序非递归
+void QuickSort4(int* str, int n)
+{
+	Stack ST;
+	STInit(&ST);
+	STPush(&ST, 0);
+	STPush(&ST, n-1 );
+	while (!STEmpty(&ST))
+	{
+		int right = STTop(&ST);
+		STPop(&ST);
+		int left = STTop(&ST);
+		STPop(&ST);
+		if(left<right)
+		{
+			int begin = left;
+			int end = right;
+			//随机选key
+			/*int random = left+rand()%(right);
+			Swap(&str[left], &str[random]);*/
+			//三重取中
+			int mid = GetMidNumi(str, left, right);
+			if (mid != left)
+				Swap(&str[mid], &str[left]);
+			int key = left;
+			int prev = left;
+			int cur = left + 1;
+			while (cur <= end)
+			{
+				if (str[cur] < str[key] && ++prev != cur)
+					Swap(&str[cur], &str[prev]);
+				cur++;
+
+			}
+			Swap(&str[prev], &str[key]);
+			STPush(&ST, prev + 1);
+			STPush(&ST, end);
+			STPush(&ST, begin);
+			STPush(&ST, prev - 1);	
+		}
+	}
+	STDestroy(&ST);
+}
+
+//计数排序
+void CountSort(int* str, int n);

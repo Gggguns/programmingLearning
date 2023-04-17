@@ -49,3 +49,9 @@ void QuickSort3(int* str, int left, int right);
 
 //归并排序非递归
 void MergeSort2(int* str, int n);
+
+//快速排序非递归
+void QuickSort4(int* str, int n);
+
+//计数排序
+void CountSort(int* str, int n);
