@@ -409,4 +409,35 @@ void QuickSort4(int* str, int n)
 }
 
 //¼ÆÊýÅÅÐò
-void CountSort(int* str, int n);
+void CountSort(int* str, int n)
+{
+	int i = n;
+	int Min = str[0], Max = str[0];
+	while (i--)
+	{
+		if (str[i] < Min)
+			Min = str[i];
+		if (str[i] > Max)
+			Max = str[i];
+	}
+	int* tmp = (int*)calloc(Max-Min+1,sizeof(int));
+	if (tmp == NULL)
+	{
+		perror("calloc fail");
+		return;
+	}
+	for (i = 0;i < n;i++)
+	{
+		tmp[str[i] - Min]= tmp[str[i] - Min]+1;
+	}
+	int j = 0;
+	for (i = 0,j=0;i < Max - Min + 1;i++)
+	{
+		if (tmp[i] > 0)
+		{
+			while (tmp[i]--)
+				str[j++] = i + Min;
+		}
+	}
+	free(tmp);
+}

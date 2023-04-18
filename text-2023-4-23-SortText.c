@@ -83,7 +83,7 @@ void TextOP()
 }
 int main()
 {
-	int arr1[] = { 23,6,3,7,8,500,78,34,34,2,52,6,244,72,6,23,6,8,4,100,-1,78,0,20,-4};
+	int arr1[] = { 23,6,3,7,8,500,78,34,34,2,52,6,244,72,6,23,6,8,4,100,-1,78,0,20,-4,66,77};
 	int size = sizeof(arr1) / sizeof(arr1[0]);
 	//BubbleSort(arr1, size);
 	//SelectSort(arr1,size);
@@ -93,7 +93,8 @@ int main()
 	/*InsertSort(arr1, size);*/
 	//QuickSort3(arr1, 0, size - 1);
 	//MergeSort2(arr1, size);
-	QuickSort4(arr1, size);
+	//QuickSort4(arr1, size);
+	CountSort(arr1, size);
 	PrintfArray(arr1, size);
 	//TextOP();
 	return 0;
