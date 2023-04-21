@@ -439,5 +439,5 @@ void CountSort(int* str, int n)
 				str[j++] = i + Min;
 		}
 	}
-	free(tmp);
+	free(tmp); 
 }
