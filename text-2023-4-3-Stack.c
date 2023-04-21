@@ -51,3 +51,8 @@ void STDestroy(Stack* ST)
     ST->capacity = 0;
     ST->size = 0;
 }
+
+bool STEmpty(Stack* ST)
+{
+    return ST->size == 0;
+}
