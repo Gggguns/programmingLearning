@@ -21,7 +21,7 @@ LNode* BuyNode(int* pi)
 int main()
 {
     int n = 0, m = 0, i = 1;
-    LNode* head = BuyNode(&i);
+    LNode* head = BuyNode(&i); 
     LNode* tail = head;
     tail->next = head;
     scanf("%d%d", &n, &m);
