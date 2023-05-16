@@ -18,7 +18,7 @@ Data::Data(const Data& d)
 	_day = d._day;
 }
 
-//运算符重载
+//运算符重载 
 //大于
 bool Data::operator<(const Data& d)
 {
