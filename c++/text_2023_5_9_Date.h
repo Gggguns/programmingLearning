@@ -1,25 +1,138 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 //日期
-class Data
+class Date
+
 {
+
 public:
-	//初始化构造函数
-	Data(int year = 0, int month = 0, int day = 0);
 
-	//拷贝构造函数
-	Data(const Data& d);
+	// 获取某年某月的天数
 
-	//运算符重载
-	//大于
-	bool operator<(const Data& d);
+	int GetMonthDay(int year, int month);
 
-	//等于
-	bool operator==(const Data& d);
+
+
+	// 全缺省的构造函数
+
+	Date(int year = 1900, int month = 1, int day = 1);
+
+
+
+	// 拷贝构造函数
+
+	Date(const Date& d);
+
+
+
+	// 赋值运算符重载
+
+  // d2 = d3 -> d2.operator=(&d2, d3)
+
+	Date& operator=(const Date& d);
+
+
+
+	// 析构函数
+
+	~Date();
+
+
+
+	// 日期+=天数
+
+	Date& operator+=(int day);
+
+
+
+	// 日期+天数
+
+	Date operator+(int day);
+
+
+
+	// 日期-天数
+
+	Date operator-(int day);
+
+
+
+	// 日期-=天数
+
+	Date& operator-=(int day);
+
+
+
+	// 前置++
+
+	Date& operator++();
+
+
+
+	// 后置++
+
+	Date operator++(int);
+
+
+
+	// 后置--
+
+	Date operator--(int);
+
+
+
+	// 前置--
+
+	Date& operator--();
+
+
+
+	// >运算符重载
+
+	bool operator>(const Date& d);
+
+
+
+	// ==运算符重载
+
+	bool operator==(const Date& d);
+
+
+
+	// >=运算符重载
+
+	bool operator >= (const Date& d);
+
+
+
+	// <运算符重载
+
+	bool operator < (const Date& d);
+
+
+
+	// <=运算符重载
+
+	bool operator <= (const Date& d);
+
+
+
+	// !=运算符重载
+
+	bool operator != (const Date& d);
+
+
+
+	// 日期-日期 返回天数
+
+	int operator-(const Date& d);
 
 private:
+
 	int _year;
+
 	int _month;
+
 	int _day;
 
 };
