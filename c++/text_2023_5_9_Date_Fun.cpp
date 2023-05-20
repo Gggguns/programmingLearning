@@ -6,7 +6,7 @@
 int GetMonthDay(int year, int month)
 {
 	while (12 < month)
-	{
+	{   
 		month--;
 		year++;
 	}
