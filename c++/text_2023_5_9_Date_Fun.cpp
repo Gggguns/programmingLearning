@@ -3,13 +3,25 @@
 
 // 获取某年某月的天数
 
-int GetMonthDay(int year, int month);
+int GetMonthDay(int year, int month)
+{
+	while (12 < month)
+	{
+		month--;
+		year++;
+	}
+	static int arr[13] = { 0,31,28,31,30,31,30,31 ,31,30 ,31,30 ,31 };
+	if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
+		return arr[month] + 1;
+	else
+		return arr[month];
+}
 
 
 
 // 全缺省的构造函数
 
-Date::Date(int year = 1900, int month = 1, int day = 1)
+Date::Date(int year, int month, int day)
 {
 	_year = year;
 	_month = month;
@@ -39,32 +51,56 @@ Date& Date::operator=(const Date& d)
 	_year = d._year;
 	_month = d._month;
 	_day = d._day;
-	return;
+	return *this;
 }
 
 
 
 // 析构函数
-
-~Date();
+Date::~Date()
+{
+	_year = 0;
+	_month = 0;
+	_day = 0;
+}
 
 
 
 // 日期+=天数
 
-Date& operator+=(int day);
+Date& Date::operator+=(int day)
+{
+	_day = _day + day;
+	while (GetMonthDay(_year, _month) < _day)
+	{
+		_day = _day - GetMonthDay(_year, _month);
+		_month++;
+		while (_month > 12)
+		{
+			_month = _month - 12;
+			_year++;
+		}
+	}
+	return *this;
+}
 
 
 
 // 日期+天数
 
-Date operator+(int day);
+Date Date::operator+(int day)
+{
+	Date d(*this);
+	d += day;
+	return d;
+
+}
 
 
 
 // 日期-天数
 
-Date operator-(int day);
+Date Date::operator-(int day);
 
 
 
