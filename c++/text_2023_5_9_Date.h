@@ -1,15 +1,18 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
+using namespace std;
 //日期
 class Date
 
 {
+	friend  ostream& operator<<(ostream& out, const Date& d);
+	friend  istream& operator>>(istream& in, Date& d);
 
 public:
 
 	// 获取某年某月的天数
 
-	int GetMonthDay(int year, int month);
+	int GetMonthDay(int year, int month)const;
 
 
 
@@ -47,13 +50,13 @@ public:
 
 	// 日期+天数
 
-	Date operator+(int day);
+	Date operator+(int day)const;
 
 
 
 	// 日期-天数
 
-	Date operator-(int day);
+	Date operator-(int day)const;
 
 
 
@@ -89,43 +92,43 @@ public:
 
 	// >运算符重载
 
-	bool operator>(const Date& d);
+	bool operator>(const Date& d)const;
 
 
 
 	// ==运算符重载
 
-	bool operator==(const Date& d);
+	bool operator==(const Date& d)const;
 
 
 
 	// >=运算符重载
 
-	bool operator >= (const Date& d);
+	bool operator >= (const Date& d)const;
 
 
 
 	// <运算符重载
 
-	bool operator < (const Date& d);
+	bool operator < (const Date& d)const;
 
 
 
 	// <=运算符重载
 
-	bool operator <= (const Date& d);
+	bool operator <= (const Date& d)const;
 
 
 
 	// !=运算符重载
 
-	bool operator != (const Date& d);
+	bool operator != (const Date& d)const;
 
 
 
 	// 日期-日期 返回天数
 
-	int operator-(const Date& d);
+	int operator-(const Date& d)const;
 
 private:
 
@@ -136,3 +139,7 @@ private:
 	int _day;
 
 };
+
+ostream& operator<<(ostream& out, const Date& d);
+
+istream& operator>>(istream& in, Date& d);
