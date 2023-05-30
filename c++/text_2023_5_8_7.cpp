@@ -10,7 +10,7 @@ public:
 		: _year(year)
 		, _month(month)
 		, _day(day)
-	{}
+	{} 
 	Date(const Date& d)
 	{
 		_year = d._year;
