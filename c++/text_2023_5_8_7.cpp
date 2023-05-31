@@ -14,7 +14,7 @@ int getmonth(int year, int month)
 		month = month + 12;
 		year--;
 	}
-	if (month == 2 && ((year % 4 == 0 && year % 100 == 0) || year % 400 == 0))
+	if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
 	{
 		return arr[month] + 1;
 	}
@@ -27,14 +27,60 @@ class Date
 {
 public:
 	friend istream& operator>>(istream& in, Date& d);
-	friend ostream& operator<<(ostream& out, Date& d);
+	friend ostream& operator<<(ostream& out, const Date& d);
 	Date operator+(int day)
 	{
-		_day = _day + day;
-		while (_day > getmonth(_year, _month))
+		if (day < 0)
 		{
-
+			day = -day;
+			return (*this) - day;
 		}
+		Date ret(*this);
+		ret._day = ret._day + day;
+		while (ret._day > getmonth(ret._year, ret._month))
+		{
+			ret._day = ret._day - getmonth(ret._year, ret._month);
+			ret._month++;
+			while (ret._month > 12)
+			{
+				ret._month = ret._month - 12;
+				ret._year++;
+			}
+		}
+		return ret;
+	}
+	Date operator-(int day)
+	{
+		if (day < 0)
+		{
+			day = -day;
+			return (*this) + day;
+		}
+		Date ret(*this);
+		ret._day = ret._day - day;
+		while (ret._day < getmonth(ret._year, ret._month))
+		{
+			ret._day = ret._day + getmonth(ret._year, ret._month);
+			ret._month--;
+			while (ret._month < 1)
+			{
+				ret._month = ret._month + 12;
+				ret._year--;
+			}
+		}
+		return ret;
+	}
+	int countday(Date& d)
+	{
+		int year = d._year;
+		int month = d._month-1;
+		int aday = d._day;
+		while (month > 0)
+		{
+			aday = aday + getmonth(year, month);
+			month--;
+		}
+		return aday;
 	}
 	Date(int year, int month, int day)
 		: _year(year)
@@ -63,7 +109,7 @@ istream& operator>>(istream& in, Date& d)
 	in >> d._year >> d._month >> d._day;
 	return in;
 }
-ostream& operator<<(ostream& out, Date& d)
+ostream& operator<<(ostream& out, const Date& d)
 {
 	out << d._year << '-' << d._month << '-' << d._day << endl;
 	return out;
@@ -71,5 +117,7 @@ ostream& operator<<(ostream& out, Date& d)
 
 int main()
 {
+	Date d1(2000, 6, 5);
+	cout << (d1 + 100) << endl;
 	return 0;
 }
