@@ -1,5 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
+#include<iomanip>
+using namespace std;
 int getmonthday(int year, int month)
 {
 	while (month > 12)
@@ -20,6 +22,8 @@ int getmonthday(int year, int month)
 }
 class Date
 {
+	friend ostream& operator<<(ostream& out, const Date& d);
+	friend istream& operator>>(istream& in, Date& d);
 public:
 	Date(int year = 0, int month = 0, int day = 0)
 		: _year(year)
@@ -28,31 +32,45 @@ public:
 	{}
 	Date operator+(int day)
 	{
-		_day += day;
-		while (_day > getmonthday(_year, _month))
+		Date d(*this);
+		if (day < 0)
 		{
-			_day -= getmonthday(_year, _month);
-			_month++;
-			while (_month > 12)
+			day = -day;
+			return d - day;
+		}
+		d._day += day;
+		while (d._day > getmonthday(d._year, _month))
+		{
+			d._day -= getmonthday(d._year, d._month);
+			d._month++;
+			while (d._month > 12)
 			{
-				_month -= 12;
-				_year++;
+				d._month -= 12;
+				d._year++;
 			}
 		}
+		return d;
 	}
 	Date operator-(int day)
 	{
-		_day -= day;
-		while (_day < 0)
+		Date d(*this);
+		if (day < 0)
 		{
-			_day += getmonthday(_year, _month-1);
-			_month--;
-			while (_month < 0)
+			day = -day;
+			return d + day;
+		}
+		d._day -= day;
+		while (d._day < 0)
+		{
+			d._month--;
+			d._day += getmonthday(d._year, d._month);
+			while (d._month < 0)
 			{
-				_month += 12;
-				_year--;
+				d._month += 12;
+				d._year--;
 			}
 		}
+		return d;
 	}
 
 private:
@@ -60,7 +78,21 @@ private:
 	int _month;
 	int _day;
 };
+ostream& operator<<(ostream& out, const Date& d)
+{
+	out << d._year << '-' << setw(2) << setfill('0') << d._month << '-' << setw(2) << setfill('0') << d._day << endl;
+	return out;
+}
+istream& operator>>(istream& in, Date& d)
+{
+	in >> d._year >> d._month >> d._day;
+	return in;
+}
 int main()
 {
+	int year = 0, day = 0;
+	cin >> year >> day;
+	Date d(year, 1, 0);
+	cout << (d + day) << endl;
 	return 0;
 }
