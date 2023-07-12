@@ -1,4 +1,22 @@
-#define _CRT_SECURE_NO_WARNINGSfriend ostream& operator<<(ostream& _cout, const bit::string& s);
+#define _CRT_SECURE_NO_WARNINGS
+#include"text_2023_7_10_String.h"
+
+zjh::string(std::size_t size, std::size_t capacity)
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+ostream& operator<<(ostream& _cout, const bit::string& s);
 
 friend istream& operator>>(istream& _cin, zjh::string& s);
 
