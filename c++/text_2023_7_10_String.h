@@ -16,7 +16,7 @@ namespace zjh
 			_str = reserve(_size);
 			strcpy(_str, str);
 		}
-		char* reserve(size_t size)
+		char* reserve(size_t size) 
 		{
 			assert(size >= 0);
 			char* ret = new char[size + 1];
