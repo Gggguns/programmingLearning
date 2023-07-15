@@ -8,36 +8,72 @@ namespace zjh
 {
 	class string
 	{
+		friend istream& operator>>(istream& cin, string& s);
+		friend ostream& operator<<(ostream& cout, const string& s);
 	public:
-		string(const char*str) 
+		//初始化
+		string(const char*str)
 		{
 			_size = strlen(str);
-			_capacity = _size;
-			_str = reserve(_size);
+			_capacity = _size+1;
+			_str = new char[_capacity];
 			strcpy(_str, str);
 		}
-		char* reserve(size_t size) 
+		//开空间
+		void reserve(size_t size)
 		{
 			assert(size >= 0);
-			char* ret = new char[size + 1];
-			return ret;
+			if(size>_capacity)
+			{
+				char* ret = new char[size + 1];
+				_capacity = size + 1;
+				strcpy(ret, _str);
+				delete(_str);
+				_str = ret;
+			}
+			
 		}
-		string(const string& str) 
+		//拷贝函数
+		string(const string& s) 
 		{
-			_size = str._size;
-			_capacity = str._capacity;
-			_str = new char[str._capacity];
-			strcpy(_str, str._str);
+			_size = s._size;
+			_capacity = s._capacity;
+			_str = new char[s._capacity];
+			strcpy(_str, s._str);
 		}
+		//析构释放空间
 		~string()
 		{
 			_size = 0;
 			_capacity = 0;
 			delete(_str);
 		}
+		//
+		//迭代器
+		typedef char* iterator;
+		//起始位置
+		iterator begin()
+		{
+			return _str;
+		}
+		const iterator begin()const
+		{
+			return _str;
+		}
+		//末尾位置
+		iterator end()
+		{
+			return _str + _size;
+		}
+		const iterator end()const
+		{
+			return _str + _size;
+		}
 	private:
 		size_t _size;
 		size_t _capacity;
 		char* _str;
+		const static size_t npos;
 	};
+	//const size_t string::npos = -1;
 }
