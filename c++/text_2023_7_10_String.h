@@ -20,18 +20,17 @@ namespace zjh
 			strcpy(_str, str);
 		}
 		//开空间
-		void reserve(size_t size)
+		void reserve(size_t n)
 		{
-			assert(size >= 0);
-			if(size>_capacity)
+			assert(n >= 0);
+			if(n>=_capacity-1)
 			{
-				char* ret = new char[size + 1];
-				_capacity = size + 1;
+				char* ret = new char[n + 1];
+				_capacity = n + 1;
 				strcpy(ret, _str);
 				delete(_str);
 				_str = ret;
 			}
-			
 		}
 		//拷贝函数
 		string(const string& s) 
@@ -68,6 +67,64 @@ namespace zjh
 		const iterator end()const
 		{
 			return _str + _size;
+		}
+		//尾插一个字符
+		void push_back(char c)
+		{
+			_size++;
+			reserve(_size);
+			_str[_size - 1] = c;
+			_str[_size] = '\0';
+		}
+		//追加字符串
+		void append(const char* str)
+		{
+			int len = strlen(str);
+			_size += len;
+			reserve(_size);
+			strcpy(_str + _size - len, str);
+		}
+		//获取字符串
+		const char* c_str()const
+		{
+			return _str;
+		}
+		//获取数据个数
+		size_t size()const
+		{
+			return _size;
+		}
+		//获取容量数据
+		size_t capacity()const
+		{
+			return _capacity;
+		}
+		//清除数据
+		void clear()
+		{
+			_size = 0;
+			_str[_size] = '\0';
+		}
+		//判空
+		bool empty()const
+		{
+			return _size == 0;
+		}
+		//开空间+初始化
+		void resize(size_t n, char c = '\0')
+		{
+			assert(n >= 0);
+			if (n >= _capacity - 1)
+			{
+				char* ret = new char[n + 1];
+				_capacity = n + 1;
+				strcpy(ret, _str);
+				delete(_str);
+				_str = ret;
+				memset(_str + _size , c, _capacity - _size);
+			}
+			_size = n;
+			_str[n] = '\0';
 		}
 	private:
 		size_t _size;
