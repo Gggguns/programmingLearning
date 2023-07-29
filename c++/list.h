@@ -5,7 +5,7 @@ namespace zjh
 	template<class T>
 	struct list_node
 	{
-		list_node* prve;
+		list_node* prev;
 		list_node* next;
 		T value;
 
