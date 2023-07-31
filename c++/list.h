@@ -16,6 +16,11 @@ namespace zjh
 		{}
 	};
 	template<class T>
+	struct list_iterator
+	{
+		list_node* node;
+	};
+	template<class T>
 	class list
 	{
 		typedef list_node<T> Node;
