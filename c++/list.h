@@ -73,7 +73,7 @@ namespace zjh
 		}
 		bool operator!=(const self& l)
 		{
-			return _node == l._node;
+			return _node == l._node; 
 		}
 		//        bool operator==(const Self& l);
 	};

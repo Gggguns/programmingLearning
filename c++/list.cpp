@@ -34,7 +34,7 @@ int main()
 //        ListIterator(PNode pNode = nullptr);
 //        ListIterator(const Self& l);
 //        T& operator*();
-//        T* operator->();
+//        T* operator->(); 
 //        Self& operator++();
 //        Self operator++(int);
 //        Self& operator--();
