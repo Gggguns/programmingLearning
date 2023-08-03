@@ -1,108 +1,132 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include"list.h"
 
+
+void listtext1()
+{
+	zjh::list<int> l;
+	l.push_back(1);
+	l.push_back(2);
+	l.push_back(3);
+	l.push_back(4);
+	l.push_back(5);
+	l.push_back(6);
+	l.push_back(7);
+	l.push_back(8);
+	l.push_back(9);
+	l.push_back(10);
+	for (auto i : l)
+	{
+		cout << i << ' ';
+	}
+	cout << endl;
+	zjh::list<int>::iterator it = l.begin();
+	while (it != l.end())
+	{
+		it = l.erase(it);
+	}
+	//cout << l.back() << endl;
+	//std::list<int> L;
+	/*cout<<L.front()<<endl;
+	cout<<L.back()<<endl;*/
+}
+void listtext2()
+{
+	zjh::list<int> l;
+	l.push_front(1);
+	l.push_front(2);
+	l.push_front(3);
+	l.push_front(4);
+	l.push_front(5);
+	l.push_front(6);
+	l.push_front(7);
+	l.push_front(8);
+	l.push_front(9);
+	l.push_front(10);
+	l.pop_front();
+	l.pop_back();
+	for (auto i : l)
+	{
+		cout << i << ' ';
+	}
+	cout << endl;
+	cout << l.size() << endl;
+}
+void listtext3()
+{
+	zjh::list<int> l;
+	l.push_front(1);
+	l.push_front(2);
+	l.push_front(3);
+	l.push_front(4);
+	l.push_front(5);
+	l.push_front(6);
+	l.push_front(7);
+	l.push_front(8);
+	l.push_front(9);
+	l.push_front(10);
+	zjh::list<int>::iterator it = l.begin();
+	while (it != l.end())
+	{
+		cout << (*it) << ' ';
+		it++;
+	}
+	cout << endl;
+	l.clear();
+	cout << l.size() << endl;
+}
+void listtext4()
+{
+	zjh::list<int> l;
+	l.push_front(1);
+	l.push_front(2);
+	l.push_front(3);
+	l.push_front(4);
+	l.push_front(5);
+	l.push_front(6);
+	l.push_front(7);
+	l.push_front(8);
+	l.push_front(9);
+	for (auto e : l)
+	{
+		cout << e << ' ';
+	}
+	cout << endl;
+	zjh::list<int> i (l.begin(),l.end());
+	l.push_front(10);
+	l.push_front(11);
+	l.push_front(12);
+	l.push_front(13);
+	i.insert(++i.begin(),20);
+	for (auto e : l)
+	{
+		cout << e << ' ';
+	}
+	cout << endl;
+	for (auto e : i)
+	{
+		cout << e << ' ';
+	}
+	cout << endl;
+	l = i;
+	for (auto e : l)
+	{
+		cout << e << ' ';
+	}
+	cout << endl;
+}
+void listtext5()
+{
+	zjh::list<int> l(10,1);
+	for (auto e : l)
+	{
+		cout << e << ' ';
+	}
+	cout << endl;
+}
 int main()
 {
-	list<int> L;
-	std::list<int>::iterator it = L.begin();
+	listtext5();
 	return 0;
 }
-//#include<iostream>
-//using namespace std;
-//
-//
-//namespace bite
-//{
-//    // List的节点类
-//    template<class T>
-//    struct ListNode
-//    {
-//        ListNode(const T& val = T());
-//        ListNode<T>* _pPre;
-//        ListNode<T>* _pNext;
-//        T _val;
-//    };
-//
-//
-//    //List的迭代器类
-//    template<class T, class Ref, class Ptr>
-//    class ListIterator
-//    {
-//        typedef ListNode<T>* PNode;
-//        typedef ListIterator<T, Ref, Ptr> Self;
-//    public:
-//        ListIterator(PNode pNode = nullptr);
-//        ListIterator(const Self& l);
-//        T& operator*();
-//        T* operator->(); 
-//        Self& operator++();
-//        Self operator++(int);
-//        Self& operator--();
-//        Self& operator--(int);
-//        bool operator!=(const Self& l);
-//        bool operator==(const Self& l);
-//    private:
-//        PNode _pNode;
-//    };
-//
-//
-//    //list类
-//    template<class T>
-//    class list
-//    {
-//        typedef ListNode<T> Node;
-//        typedef Node* PNode;
-//    public:
-//        typedef ListIterator<T, T&, T*> iterator;
-//        typedef ListIterator<T, const T&, const T&> const_iterator;
-//    public:
-//        ///////////////////////////////////////////////////////////////
-//        // List的构造
-//        list();
-//        list(int n, const T& value = T());
-//        template <class Iterator>
-//        list(Iterator first, Iterator last);
-//        list(const list<T>& l);
-//        list<T>& operator=(const list<T> l);
-//        ~list();
-//
-//
-//        ///////////////////////////////////////////////////////////////
-//        // List Iterator
-//        iterator begin();
-//        iterator end();
-//        const_iterator begin();
-//        const_iterator end();
-//
-//
-//        ///////////////////////////////////////////////////////////////
-//        // List Capacity
-//        size_t size()const;
-//        bool empty()const;
-//
-//
-//        ////////////////////////////////////////////////////////////
-//        // List Access
-//        T& front();
-//        const T& front()const;
-//        T& back();
-//        const T& back()const;
-//
-//
-//        ////////////////////////////////////////////////////////////
-//        // List Modify
-//        void push_back(const T& val) { insert(begin(), val); }
-//        void pop_back() { erase(--end()); }
-//        void push_front(const T& val) { insert(begin(), val); }
-//        void pop_front() { erase(begin()); }
-//        // 在pos位置前插入值为val的节点
-//        iterator insert(iterator pos, const T& val);
-//        // 删除pos位置的节点，返回该节点的下一个位置
-//        iterator erase(iterator pos);
-//        void clear();
-//        void swap(list<T>& l);
-//    private:
-//        void CreateHead();
-//        PNode _pHead;
-//    };
-//};
+
