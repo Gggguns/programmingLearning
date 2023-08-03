@@ -17,7 +17,7 @@ namespace zjh
 			:prev(nullptr)
 			,next(nullptr)
 			,value(T())
-		{}
+		{} 
 	};
 	template<class T,class Ref,class Ptr>
 	struct list_iterator
