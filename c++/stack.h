@@ -10,11 +10,26 @@ namespace zjh
 	class stack
 	{
 	public:
-		void push(T& x)
+		void push(const T& x)
 		{
 			c.push_back(x);
 		}
-		void pop
+		void pop()
+		{
+			c.pop_back();
+		}
+		const T& top()
+		{
+			return c.back();
+		}
+		size_t size()
+		{
+			return c.size();
+		}
+		bool empty()
+		{
+			return c.empty();
+		}
 	private:
 		Container c;
 	};
