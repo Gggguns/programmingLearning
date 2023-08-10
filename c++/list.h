@@ -4,6 +4,7 @@
 #include<list>
 #include<assert.h>
 using namespace std;
+#include"reverse_iterator.h"
 namespace zjh
 {
 	template<class T>
@@ -17,7 +18,7 @@ namespace zjh
 			:prev(nullptr)
 			,next(nullptr)
 			,value(T())
-		{} 
+		{}
 	};
 	template<class T,class Ref,class Ptr>
 	struct list_iterator
@@ -74,12 +75,15 @@ namespace zjh
 			return _node == l._node;
 		}
 	};
+
 	template<class T>
 	class list
 	{
 	public:
 		typedef list_iterator<T, T&, T*> iterator;
 		typedef list_iterator<T, const T&, const T*> const_iterator;
+		typedef zjh::ReverseIterator<iterator, T&, T*> reverse_iterator;
+		typedef zjh::ReverseIterator<const_iterator, const T&, const T*> reverse_const_iterator;
 		typedef list_node<T> Node;
 		void empty_init()
 		{
@@ -273,6 +277,15 @@ namespace zjh
 			clear();
 			delete _head;
 			_head = nullptr;
+		}
+		//·´Ïòµü´úÆ÷
+		reverse_iterator cbegin()
+		{
+			return end();
+		}
+		reverse_iterator cend()
+		{
+			return begin();
 		}
 	private:
 		Node* _head;

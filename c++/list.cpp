@@ -124,9 +124,30 @@ void listtext5()
 	}
 	cout << endl;
 }
+void listtext6()
+{
+	zjh::list<int> L;
+	L.push_back(1);
+	L.push_back(2);
+	L.push_back(3);
+	L.push_back(4);
+	L.push_back(5);
+	L.push_back(6);
+	L.push_back(7);
+	L.push_back(8);
+	L.push_back(9);
+	L.push_back(10);
+	zjh::list<int>::reverse_iterator it = L.cbegin();
+	while (it != L.cend())
+	{
+		cout << (*it) << ' ';
+		it++;
+	}
+	cout << endl;
+}
 int main()
 {
-	listtext5();
+	listtext6();
 	return 0;
 }
 
