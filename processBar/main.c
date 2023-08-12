@@ -1,5 +1,4 @@
 #include"processBar.h"
-int main()
 {
   int cout=10;
   while(cout>=0)
