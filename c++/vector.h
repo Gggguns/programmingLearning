@@ -1,6 +1,8 @@
 #pragma once
 #include<iostream>
-namespace zjy
+#include"reverse_iterator.h"
+using namespace std;
+namespace zjh
 {
 	template<class T>
 	class vector
@@ -93,6 +95,7 @@ namespace zjy
 				while (i<size())
 				{
 					tmp[i] = _start[i];
+					i++;
 				}
 				size_t oldsize = size();
 				delete[] _start;
@@ -144,7 +147,10 @@ namespace zjy
 		void push_back(const T& x)
 		{
 			if (capacity() == size())
-				reserve(capacity() * 2);
+			{
+				int newcapacity = capacity() == 0 ? 4 : capacity() * 2;
+				reserve(newcapacity);
+			}
 			*_finish = x;
 			_finish++;
 		}
@@ -165,8 +171,12 @@ namespace zjy
 		{
 			size_t n = pos - begin();
 			if (capacity() == size())
-				reserve(capacity() * 2);
-			iterator end = end();
+			{
+				int newcapacity = capacity() == 0 ? 4 : capacity() * 2;
+				reserve(newcapacity);
+			}
+			zjh::vector<T>::iterator end = _finish;
+			pos = begin() + n;
 			while (end != pos)
 			{
 				*end = *(end-1);
@@ -174,7 +184,7 @@ namespace zjy
 			}
 			_finish++;
 			*pos = x;
-			return begin() + n;
+			return pos;
 		}
 		//posÎ»ÖÃÉ¾³ý
 		iterator erase(iterator pos)
