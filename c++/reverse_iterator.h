@@ -1,16 +1,10 @@
 #pragma once
-#include<iostream>
-using namespace std;
 namespace zjh
 {
-	template<class Iterator,class Ref,class Ptr>
-	struct ReverseIterator
+	template<class Iterator,class T,class Ref,class Ptr>
+	class reverse_iterator
 	{
-		typedef ReverseIterator< Iterator, Ref, Ptr> self;
-		Iterator _it;
-		ReverseIterator(Iterator it)
-			:_it(it)
-		{}
+	public:
 		Ref operator*()
 		{
 			Iterator tmp = _it;
@@ -19,7 +13,7 @@ namespace zjh
 		Iterator& operator++()
 		{
 			_it--;
-			return _it;
+			return it;
 		}
 		Iterator operator++(int)
 		{
@@ -42,15 +36,7 @@ namespace zjh
 		{
 			return &(operator*());
 		}
-		bool operator==(const self& s)
-		{
-			return _it == s._it;
-		}
-		bool operator!=(const self& s)
-		{
-			return _it != s._it;
-		}
-	
-		
+	private:
+		Iterator _it;
 	};
 }
