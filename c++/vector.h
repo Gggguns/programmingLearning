@@ -68,12 +68,12 @@ namespace zjh
 			_endofstorage = nullptr;
 		}
 		//µü´úÆ÷
-		iterator begin()const
+		iterator begin()
 		{
 			return _start;
 		}
 
-		iterator end()const
+		iterator end()
 		{
 			return _finish;
 		}
@@ -175,12 +175,12 @@ namespace zjh
 				int newcapacity = capacity() == 0 ? 4 : capacity() * 2;
 				reserve(newcapacity);
 			}
-			zjh::vector<T>::iterator end = _finish;
+			iterator end1= end();
 			pos = begin() + n;
-			while (end != pos)
+			while (end1 != pos)
 			{
-				*end = *(end-1);
-				end--;
+				*end1 = *(end1-1);
+				end1--;
 			}
 			_finish++;
 			*pos = x;

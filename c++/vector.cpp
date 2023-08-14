@@ -31,8 +31,34 @@ void textvector1()
 	}
 	cout << endl;
 }
+void textvector2()
+{
+	zjh::vector<int> v;
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.push_back(4);
+	v.push_back(5);
+	v.push_back(6);
+	zjh::vector<int>::iterator it = v.begin();
+	for (auto e : v)
+	{
+		cout << e << ' ';
+	}
+	cout << endl;
+	while(it != v.end())
+	{
+		it = v.erase(it);
+	}
+	v.push_back(1);
+	for (auto e : v)
+	{
+		cout << e << ' ';
+	}
+	cout << endl;
+}
 int main()
 {	
-	textvector1();
+	textvector2();
 	return 0;
 }
