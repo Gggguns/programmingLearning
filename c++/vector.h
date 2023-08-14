@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<assert.h>
 #include"reverse_iterator.h"
 using namespace std;
 namespace zjh
@@ -17,9 +18,26 @@ namespace zjh
 		{}
 		vector(size_t n, const T& val = T())
 		{
-			_start = new T[n](val);
+			_start = new T[n];
+			size_t i = 0;
+			for (i = 0;i < n;i++)
+			{
+				_start[i] = val;
+			}
 			_finish = _start + n;
 			_endofstorage=_finish;
+		}
+		vector(int n, const T& val = T())
+		{
+			/*_start = new T[n];
+			size_t i = 0;
+			for (i = 0;i < n;i++)
+			{
+				_start[i] = val;
+			}
+			_finish = _start + n;
+			_endofstorage = _finish;*/
+			resize(n,val);
 		}
 		//¿½±´
 		vector(const vector<T>& v)
@@ -38,13 +56,15 @@ namespace zjh
 
 		vector(InputIterator first, InputIterator last)
 		{
-			iterator it = begin();
+			reserve(last - first);
+			int i = 0;
 			while (first != last)
 			{
-				*it = *first;
-				it++;
+				_start[i] = *first;
+				i++;
 				first++;
 			}
+			_finish = _start + i;
 		}
 		vector<T> operator=(const vector<T>& v)
 		{
