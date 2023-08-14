@@ -27,7 +27,8 @@ void text_vector1()
     v.push_back(5);
     v.push_back(4);
     v.push_back(6);
-    cout << singleNumber(v) << endl;
+    Solution s;
+    cout << s.singleNumber(v) << endl;
 }
 int main()
 {
