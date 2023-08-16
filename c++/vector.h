@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<assert.h>
+#include<vector>
 #include"reverse_iterator.h"
 using namespace std;
 namespace zjh
@@ -129,16 +130,26 @@ namespace zjh
 			if (capacity() < n)
 			{
 				iterator tmp = new T[n];
+				int i = 0;
+				for (i = 0;i < size();i++)
+				{
+					tmp[i] = _start[i];
+				}
+				
 				delete[] _start;
 				_start = tmp;
+				_finish = _start + i;
 				_endofstorage = _start + n;
+				while (_finish != _endofstorage)
+				{
+					*_finish = value;
+					_finish++;
+				}
 			}
-			int i = 0;
-			for (i = 0;i < n;i++)
+			else
 			{
-				_start[i] = value;
+				_finish = _start + n;
 			}
-			_finish = _start + n;
 			
 		}
 		//vectorµÄ´óÐ¡
