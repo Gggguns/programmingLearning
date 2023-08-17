@@ -11,7 +11,7 @@ void textvector1()
 	v.push_back(6);
 	v.push_back(7);
 	v.push_back(8);
-	v.push_back(9);
+	v.push_back(9); 
 	v.push_back(10);
 	for (auto e : v)
 	{
