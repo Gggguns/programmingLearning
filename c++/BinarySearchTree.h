@@ -318,23 +318,25 @@ namespace Key
 
 namespace Key_value
 {
-	template<class K>
+	template<class K,class V>
 	struct BinarySearchTreeNode
 	{
 		K _key;
+		V _value;
 		BinarySearchTreeNode* _left;
 		BinarySearchTreeNode* _right;
-		BinarySearchTreeNode(const K& key)
+		BinarySearchTreeNode(const K& key,const V&value)
 			:_key(key)
+			,_value(value)
 			, _left(nullptr)
 			, _right(nullptr)
 		{}
 	};
 
-	template<class K>
+	template<class K,class V>
 	class BinarySearchTree
 	{
-		typedef BinarySearchTreeNode<K> BSTreeNode;
+		typedef BinarySearchTreeNode<K,V> BSTreeNode;
 	public:
 		BinarySearchTree()
 			:_root(nullptr)
