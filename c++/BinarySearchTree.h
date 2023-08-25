@@ -352,7 +352,7 @@ namespace Key_value
 		}
 		
 		//µ›πÈ≤Â»Î
-		bool InsertR(const K& key)
+		bool InsertR(const K& key,const V&value)
 		{
 			return _InsertR(_root, key);
 		}
