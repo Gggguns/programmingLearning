@@ -354,7 +354,7 @@ namespace Key_value
 		//µİ¹é²åÈë
 		bool InsertR(const K& key,const V&value)
 		{
-			return _InsertR(_root, key);
+			return _InsertR(_root, key,value);
 		}
 
 		//ÖĞĞò±éÀú
@@ -453,11 +453,11 @@ namespace Key_value
 			}
 		}
 		//µİ¹é²åÈëµÄ×Óº¯Êı
-		bool _InsertR(BSTreeNode*& root, const K& key)
+		bool _InsertR(BSTreeNode*& root, const K& key, const V&value)
 		{
 			if (root == nullptr)
 			{
-				root = new BSTreeNode(key);
+				root = new BSTreeNode(key,value);
 				return true;
 			}
 			if (root->_key > key)
