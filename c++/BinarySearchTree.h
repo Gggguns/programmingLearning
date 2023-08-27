@@ -370,7 +370,7 @@ namespace Key_value
 		}
 
 		//递归查找
-		bool FindR(const K& key)
+		BSTreeNode* FindR(const K& key)
 		{
 			return _FindR(_root, key);
 		}
@@ -433,11 +433,11 @@ namespace Key_value
 			}
 		}
 		//递归查找的子函数
-		bool _FindR(BSTreeNode* root, const K& key)
+		BSTreeNode* _FindR(BSTreeNode* root, const K& key)
 		{
 			if (root == nullptr)
 			{
-				return false;
+				return NULL;
 			}
 			if (root->_key > key)
 			{
@@ -449,26 +449,26 @@ namespace Key_value
 			}
 			else
 			{
-				return true;
+				return root;
 			}
 		}
 		//递归插入的子函数
-		bool _InsertR(BSTreeNode*& root, const K& key, const V&value)
+		BSTreeNode*& _InsertR(BSTreeNode*& root, const K& key, const V&value)
 		{
 			if (root == nullptr)
 			{
 				root = new BSTreeNode(key,value);
-				return true;
+				return root;
 			}
 			if (root->_key > key)
-				_InsertR(root->_left, key);
+				_InsertR(root->_left, key,value);
 			else if (root->_key < key)
 			{
-				_InsertR(root->_right, key);
+				_InsertR(root->_right, key,value);
 			}
 			else
 			{
-				return false;
+				return root;
 			}
 		}
 		//中序遍历子函数
@@ -479,7 +479,7 @@ namespace Key_value
 				return;
 			}
 			_Inorder(root->_left);
-			cout << root->_key << ' ';
+			cout << root->_key << ':'<<root->_value<<endl;
 			_Inorder(root->_right);
 		}
 		BSTreeNode* _root;

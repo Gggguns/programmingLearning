@@ -53,8 +53,36 @@ void testBST2()
 	
 	
 }
+void testBST3()
+{
+	Key_value::BinarySearchTree<string,string> B;
+	B.InsertR("string", "×Ö·û´®");
+	B.InsertR("apple", "Æ»¹û");
+	B.InsertR("range", "·¶Î§");
+	B.InsertR("equal", "ÏàµÈ");
+	B.Inorder();
+	cout<<B.FindR("range");
+}
+void testBST4()
+{
+	Key_value::BinarySearchTree<string, int> B;
+	string S[] = { "Î÷¹Ï","Ïã½¶","ÌÒ×Ó","Ïã½¶","ÌÒ×Ó", "Î÷¹Ï" ,"Î÷¹Ï" ,"Î÷¹Ï","Ïã½¶","ÌÒ×Ó", "Î÷¹Ï" };
+	for (auto e : S)
+	{
+		auto root = B.FindR(e);
+		if (root)
+		{
+			root->_value++;
+		}
+		else
+		{
+			B.InsertR(e, 1);
+		}
+	}
+	B.Inorder();
+}
 int main()
 {
-	testBST2();
+	testBST4();
 	return 0;
 }
