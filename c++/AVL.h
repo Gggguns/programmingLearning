@@ -28,6 +28,11 @@ namespace zjh
 	public:
 		bool Insert(const pair<K, V>& kv)
 		{
+			if (_root == nullptr)
+			{
+				_root = new Node(kv);
+				return true;
+			}
 			Node* cur = _root;
 			Node* parent = nullptr;
 			//找到新增kv的插入位置
@@ -45,7 +50,7 @@ namespace zjh
 				}
 				else
 				{
-					break;
+					return false;
 				}
 			}
 			//插入kv
@@ -53,20 +58,27 @@ namespace zjh
 			if (kv.first > parent->_kv.first)
 			{
 				parent->_right = cur;
-				parent->_bf++;
-			}
-			else if (kv.first < parent->_kv.first)
-			{
-				parent->_left = cur;
-				parent->_bf--;
+				//cur->_parent = parent;
 			}
 			else
 			{
-				assert(false);
+				parent->_left = cur;
+				//cur->_parent = parent;
 			}
-			//更新平衡因子
+			cur->_parent = parent;
+		
 			while (parent)
 			{
+				if (parent->_left == cur)
+				{
+					parent->_bf--;
+				}
+				else/* if (parent->_right == cur)*/
+				{
+					parent->_bf++;
+				}
+				
+			
 				if (parent->_bf == 0)
 				{
 					break;
@@ -75,36 +87,28 @@ namespace zjh
 				{
 					cur = parent;
 					parent = cur->_parent;
-					if (parent->_left == cur)
+				}
+				else if (parent->_bf == 2 || parent->_bf == -2)
+				{
+					if (parent->_right && parent->_right->_bf == 1 && parent->_bf == 2)
 					{
-						parent->_bf--;
+						RotateL(parent);
 					}
-					else if (parent->_right == cur)
+					else if (parent->_left && parent->_left->_bf == -1 && parent->_bf == -2)
 					{
-						parent->_bf++;
+						RotateR(parent);
+					}
+					else if (parent->_left && parent->_left->_bf == 1 && parent->_bf == -2)
+					{
+						RotateLR(parent);
+					}
+					else if (parent->_right && parent->_right->_bf == -1 && parent->_bf == 2)
+					{
+						RotateRL(parent);
 					}
 					else
 					{
 						assert(false);
-					}
-				}
-				else if (parent->_bf == 2 || parent->_bf == -2)
-				{
-					if (parent->_left->_bf==1&& parent->_bf == 2)
-					{
-						RotateL(parent);
-					}
-					else if (parent->_left->_bf == -1 && parent->_bf == -2)
-					{
-						RotateR(parent);
-					}
-					else if (parent->_left->_bf == 1 && parent->_bf == -2)
-					{
-						RotateLR(parent);
-					}
-					else if (parent->_left->_bf == -1 && parent->_bf == 2)
-					{
-						RotateRL(parent);
 					}
 				}
 				else
@@ -112,12 +116,18 @@ namespace zjh
 					assert(false);
 				}
 			}
+			return true;
 		}
 		void RotateL(Node* parent)
 		{
 			//旋转
 			Node* cur = parent->_right;
-			parent->_right = cur->_left;
+			Node* curleft = cur->_left;
+			parent->_right = curleft;
+			if (curleft)
+			{
+				curleft->_parent = parent;
+			}
 			cur->_left = parent;
 			Node* ppNode = parent->_parent;
 			parent->_parent = cur;
@@ -147,7 +157,12 @@ namespace zjh
 		{
 			//旋转
 			Node* cur = parent->_left;
-			parent->_left = cur->_right;
+			Node* curright = cur->_right;
+			parent->_left = curright;
+			if (curright)
+			{
+				curright->_parent = parent;
+			}
 			cur->_right = parent;
 			Node* ppNode = parent->_parent;
 			parent->_parent = cur;
@@ -177,7 +192,7 @@ namespace zjh
 		{
 			Node* cur = parent->_right;
 			Node* curleft = cur->_left;
-			int bf = parent->_bf;
+			int bf = curleft->_bf;
 			RotateR(cur);
 			RotateL(parent);
 			if (bf == 0)
@@ -207,7 +222,7 @@ namespace zjh
 		{
 			Node* cur = parent->_left;
 			Node* curright = cur->_right;
-			int bf = parent->_bf;
+			int bf = curright->_bf;
 			RotateL(cur);
 			RotateR(parent);
 			if (bf == 0)
@@ -219,14 +234,14 @@ namespace zjh
 			else if (bf == -1)
 			{
 				curright->_bf = 0;
-				cur->_bf = 1;
-				parent->_bf = 0;
+				cur->_bf = 0;
+				parent->_bf = -1;
 			}
 			else if (bf == 1)
 			{
 				curright->_bf = 0;
-				cur->_bf = 0;
-				parent->_bf = -1;
+				cur->_bf = 1;
+				parent->_bf = 0;
 			}
 			else
 			{
