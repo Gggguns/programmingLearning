@@ -12,7 +12,7 @@ int GetMonthDay(int year, int month)
 }
 class Date
 {
-	//friend ostream& operator<<(ostream& out, const Date& d);
+	friend ostream& operator<<(ostream& out, const Date& d);
 public:
 	//日期类的初始化
 	Date(int year , int month = 0, int day = 0)
@@ -196,81 +196,81 @@ private:
 	static int _a;
 	int _b;
 };
-//ostream& operator<<(ostream& out, const Date& d)
-//{
-//	out << d._year << '.' << d._month << '.' << d._day << endl;
-//	return out;
-//}
-//void testDate1()
-//{
-//	Date d1(2023, 9, 15);
-//	Date d2(2023, 9, 15);
-//	//d1 = d1 + (-10187);
-//	cout << d1++ ;
-//	cout << "d1:" << d1 ;
-//	cout << ++d2 ;
-//	cout << "d2:" << d2;
-//}
-//void testDate2()
-//{
-//	int i = 10;
-//	int j = 10;
-//	/*cout << i - 10<<endl;
-//	cout << i << endl;*/
-//	cout << i++ << endl;
-//	cout << "i:" << i << endl;
-//	cout << ++j << endl;
-//	cout << "j:" << j << endl;
-//}
-//void testDate3()
-//{
-//	Date  i(2023, 9, 16);
-//	Date j(2023, 9, 16);
-//	cout << "操作前i的值为：" << i;
-//	cout << "前置--i的返回值为：" << --i;
-//	cout << "前置--后i的值为：" << i;
-//
-//	cout << "操作前j的值为：" << j;
-//	cout << "后置--j的返回值为：" << j--;
-//	cout << "后置--后j的值为：" << j;
-//}
-//void testDate4()
-//{
-//	Date d1(2023, 9, 13);
-//	Date d2(2023, 9, 17);
-//	Date d3(2022, 9, 9);
-//	Date d4(2022, 10, 9);
-//
-//	cout << "d1:"<<d1<<"d2:"<<d2;
-//	cout << (d1 > d2) << endl;
-//	cout << (d1 == d2) << endl;
-//	cout << (d1 < d2) << endl;
-//
-//	cout << "d2:" << d2 << "d3:" << d3;
-//	cout << (d2 > d3) << endl;
-//	cout << (d2 == d3) << endl;
-//	cout << (d2 < d3) << endl;
-//
-//	cout << "d3:" << d3 << "d4:" << d4;
-//	cout << (d3 > d4) << endl;
-//	cout << (d3 == d4) << endl;
-//	cout << (d3 < d4) << endl;
-//}
-//void testDate5()
-//{
-//	Date d1(2004, 4, 6);
-//	Date d2(2043, 10, 8);
-//	cout << d1 - d2 << endl;
-//	cout << d2 - d1 << endl;
-//}
-//void testDate6()
-//{
-//	Date d1(2023, 9, 17);
-//	//d1 << cout;
-//	d1.Print();
-//	const Date d2(2023, 9, 16);
-//	d2.Print();
-//}
+ostream& operator<<(ostream& out, const Date& d)
+{
+	out << d._year << '.' << d._month << '.' << d._day << endl;
+	return out;
+}
+void testDate1()
+{
+	Date d1(2023, 9, 15);
+	Date d2(2023, 9, 15);
+	//d1 = d1 + (-10187);
+	cout << d1++ ;
+	cout << "d1:" << d1 ;
+	cout << ++d2 ;
+	cout << "d2:" << d2;
+}
+void testDate2()
+{
+	int i = 10;
+	int j = 10;
+	/*cout << i - 10<<endl;
+	cout << i << endl;*/
+	cout << i++ << endl;
+	cout << "i:" << i << endl;
+	cout << ++j << endl;
+	cout << "j:" << j << endl;
+}
+void testDate3()
+{
+	Date  i(2023, 9, 16);
+	Date j(2023, 9, 16);
+	cout << "操作前i的值为：" << i;
+	cout << "前置--i的返回值为：" << --i;
+	cout << "前置--后i的值为：" << i;
+
+	cout << "操作前j的值为：" << j;
+	cout << "后置--j的返回值为：" << j--;
+	cout << "后置--后j的值为：" << j;
+}
+void testDate4()
+{
+	Date d1(2023, 9, 13);
+	Date d2(2023, 9, 17);
+	Date d3(2022, 9, 9);
+	Date d4(2022, 10, 9);
+
+	cout << "d1:"<<d1<<"d2:"<<d2;
+	cout << (d1 > d2) << endl;
+	cout << (d1 == d2) << endl;
+	cout << (d1 < d2) << endl;
+
+	cout << "d2:" << d2 << "d3:" << d3;
+	cout << (d2 > d3) << endl;
+	cout << (d2 == d3) << endl;
+	cout << (d2 < d3) << endl;
+
+	cout << "d3:" << d3 << "d4:" << d4;
+	cout << (d3 > d4) << endl;
+	cout << (d3 == d4) << endl;
+	cout << (d3 < d4) << endl;
+}
+void testDate5()
+{
+	Date d1(2004, 4, 6);
+	Date d2(2043, 10, 8);
+	cout << d1 - d2 << endl;
+	cout << d2 - d1 << endl;
+}
+void testDate6()
+{
+	Date d1(2023, 9, 17);
+	//d1 << cout;
+	d1.Print();
+	const Date d2(2023, 9, 16);
+	d2.Print();
+}
 void testDate7()
 {
 	A a;
@@ -280,12 +280,18 @@ void testDate7()
 	cout << a.GetA() << endl;
 }
 int A:: _a = 0;
+void testDate8()
+{
+	Date d1(2023, 9, 19);
+	Date d2(2023, 10, 10);
+	cout << d1 <<d2;
+}
 
 
 int main()
 {
 
-	testDate7();
+	testDate8();
 	////定义变量i赋值10
 	//int i = 10;
 	////定义变量j,对变量i的数据进行备份
