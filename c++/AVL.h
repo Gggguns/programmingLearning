@@ -90,19 +90,19 @@ namespace zjh
 				}
 				else if (parent->_bf == 2 || parent->_bf == -2)
 				{
-					if (parent->_right && parent->_right->_bf == 1 && parent->_bf == 2)
+					if (parent->_bf == 2 && cur->_bf == 1)
 					{
 						RotateL(parent);
 					}
-					else if (parent->_left && parent->_left->_bf == -1 && parent->_bf == -2)
+					else if (parent->_bf == -2 && cur->_bf == -1)
 					{
 						RotateR(parent);
 					}
-					else if (parent->_left && parent->_left->_bf == 1 && parent->_bf == -2)
+					else if (parent->_bf == -2 && cur->_bf == 1)
 					{
 						RotateLR(parent);
 					}
-					else if (parent->_right && parent->_right->_bf == -1 && parent->_bf == 2)
+					else if (parent->_bf == 2 && cur->_bf == -1)
 					{
 						RotateRL(parent);
 					}
@@ -110,6 +110,8 @@ namespace zjh
 					{
 						assert(false);
 					}
+					cur = parent;
+					parent = cur->_parent;
 				}
 				else
 				{
@@ -247,6 +249,40 @@ namespace zjh
 			{
 				assert(false);
 			}
+		}
+		//判断AVL树是否平衡
+		bool Is_balance()
+		{
+			return Is_balance(_root);
+		}
+		
+		bool Is_balance(Node* root)
+		{
+			if (root == nullptr)
+			{
+				return true;
+			}
+			int Hleft = Hight(root->_left);
+			int Hright = Hight(root->_right);
+			if (Hright - Hleft == root->_bf)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		//求高度
+		int Hight(Node* root)
+		{
+			if (root == nullptr)
+			{
+				return 0;
+			}
+			int Hleft = Hight(root->_left);
+			int Hright = Hight(root->_right);
+			return (Hleft > Hright ? Hleft : Hright)+1;
 		}
 	private:
 		Node* _root = nullptr;
