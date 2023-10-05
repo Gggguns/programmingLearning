@@ -33,8 +33,28 @@ void testRB1()
 	cout << R.Is_RBTree() << endl;
 	R.Inorder();
 }
+void testRB2()
+{
+	const int N = 10000000;
+	vector<int> v;
+	v.reserve(N);
+	srand(time(0));
+
+	for (size_t i = 0; i < N; i++)
+	{
+		v.push_back(i);
+	}
+
+	zjh::RBTree<int, int> rbt;
+	for (auto e : v)
+	{
+		rbt.Insert(make_pair(e, e));
+		//cout << "Insert:" << e << "->" << rbt.Is_RBTree() << endl;
+	}
+	cout<<rbt.Is_RBTree()<<endl;
+}
 int main()
 {
-	testRB1();
+	testRB2();
 	return 0;
 }

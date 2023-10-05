@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<assert.h>
+#include<vector>
 using namespace std;
 namespace zjh
 {
@@ -82,6 +83,7 @@ namespace zjh
 					{
 						parent->_col = BLACK;
 						uncle->_col = BLACK;
+						grandparent->_col = RED;
 						cur = grandparent;
 						parent = cur->_parent;
 					}
@@ -112,6 +114,7 @@ namespace zjh
 					{
 						parent->_col = BLACK;
 						uncle->_col = BLACK;
+						grandparent->_col = RED;
 						cur = grandparent;
 						parent = cur->_parent;
 					}
@@ -241,58 +244,99 @@ namespace zjh
 		//判断是不是红黑树
 		bool Is_RBTree()
 		{
-			if (_root->_col == RED)
-			{
+			//检查头节点的颜色
+			if (_root->_col != BLACK)
 				return false;
-			}
-			return Is_RBTree(_root);
-		}
-		bool Is_RBTree(Node* root)
-		{
-			if (root == NULL)
-				return true;
-
-			if (root->_col == RED && root->_parent->_col == RED)
+			//选去最左边的路径计算黑色节点数量
+			Node* cur = _root;
+			int benchmark = 0;
+			while (cur)
 			{
-				return false;
+				if (cur->_col == BLACK)
+				{
+					++benchmark;
+				}
+				cur = cur->_left;
 			}
-			if (MaxHight() / 2 > MinHight())
-			{
+			//检查每条路径的黑色节点数量是否相等
+			if (CheckColour(_root, 0, benchmark) == false)
 				return false;
-			}
-			if (BEqual(root) == false)
+			int Min = MinHight(_root);
+			int Max = MaxHight(_root);
+			if ((double)Max / Min > (double)2)
 				return false;
 			return true;
 		}
-		//各路径的黑色节点树是否相等
-		bool BEqual(Node*root)
+
+		//颜色检查
+		bool CheckColour(Node* root,int blacknum,int benchmark)
 		{
 			if (root == nullptr)
+			{
+				if (blacknum != benchmark)
+				{
+					cout <<_root->_kv.first<<' ' << "各路径黑色节点不同" << endl;
+					return false;
+				}
 				return true;
-			bool BL=BEqual(root->_left);
-			bool BR=BEqual(root->_right);
-			int Lsize = Bsize(root->_left);
-			int Rsize = Bsize(root->_right);
-			if (Lsize == -1 || Rsize == -1)
+			}
+			//判断是否有连续得红节点
+			if (root->_col == RED && root->_parent && root->_parent->_col == RED)
+			{
+				cout << _root->_kv.first << _root->_parent->_kv.first << "红色节点连续" << endl;
 				return false;
-			return BL && BR;
-		}
-		int Bsize(Node* root)
-		{
-			if (root == nullptr)
-				return 0;
+			}
+			//计算黑色节点的个数
 			if (root->_col == BLACK)
-				return 1;
-			int Bleft = Bsize(root->_left);
-			int Bright = Bsize(root->_right);
-			return Bleft == Bright ? Bleft : -1;
+			{
+				++blacknum;
+			}
+
+			return CheckColour(root->_left, blacknum, benchmark) && CheckColour(root->_right, blacknum, benchmark);
+
 		}
+		//bool Is_RBTree(Node* root)
+		//{
+		//	if (root == NULL)
+		//		return true;
+
+		//	if (root->_col == RED && root->_parent->_col == RED)
+		//	{
+		//		return false;
+		//	}
+		//	if (MaxHight() / 2 > MinHight())
+		//	{
+		//		return false;
+		//	}
+		//	if (BEqual(root) == false)
+		//		return false;
+		//	return true;
+		//}
+		////各路径的黑色节点树是否相等
+		//bool BEqual(Node*root)
+		//{
+		//	if (root == nullptr)
+		//		return true;
+		//	bool BL=BEqual(root->_left);
+		//	bool BR=BEqual(root->_right);
+		//	int Lsize = Bsize(root->_left);
+		//	int Rsize = Bsize(root->_right);
+		//	if (Lsize == -1 || Rsize == -1)
+		//		return false;
+		//	return BL && BR;
+		//}
+		//int Bsize(Node* root)
+		//{
+		//	if (root == nullptr)
+		//		return 0;
+		//	if (root->_col == BLACK)
+		//		return 1;
+		//	int Bleft = Bsize(root->_left);
+		//	int Bright = Bsize(root->_right);
+		//	return Bleft == Bright ? Bleft : -1;
+		//}
 		
 		//高度计算
-		int MaxHight()
-		{
-			return MaxHight(_root);
-		}
 		int MaxHight(Node* root)
 		{
 			if (root == nullptr)
@@ -300,11 +344,6 @@ namespace zjh
 			int Hleft = MaxHight(root->_left);
 			int Hright = MaxHight(root->_right);
 			return (Hleft > Hright ? Hleft : Hright) + 1;
-		}
-
-		int MinHight()
-		{
-			return MinHight(_root);
 		}
 		int MinHight(Node* root)
 		{
