@@ -1,47 +1,26 @@
 #pragma once
 #include<iostream>
+#include<set>
+#include<assert.h>
 using namespace std;
-namespace zjy
+namespace zjh
 {
-	template<class K,class V>
-	struct Iterator
-	{
-		typedef RBTreeNode<K, V> Node;
-		Iterator(const Node& node)
-			:_node(node)
-		{}
-		Node* _node = nullptr;
-	};
-	//封装
-	template<class K,class V>
-	class Set
-	{
-	public:
-		bool Insert(const V& val)
-		{
-			return _t.Insert(make_pair(val, val));
-		}
-
-	private:
-		RBTree<K, V> _t;
-	};
-
-	//底层红黑树
+	//颜色枚举
 	enum Colour
 	{
 		RED,
 		BLACK
 	};
-	template<class K, class V>
+	template<class T>
 	struct RBTreeNode
 	{
-		pair<K, V> _kv;
+		T _data;
 		RBTreeNode* _left;//左节点
 		RBTreeNode* _right;//右节点
 		RBTreeNode* _parent;//父节点
 		Colour _col;
-		RBTreeNode(const pair<K, V>& kv)
-			:_kv(kv)
+		RBTreeNode(const T& data)
+			:_data(data)
 			, _left(nullptr)
 			, _right(nullptr)
 			, _parent(nullptr)
@@ -49,42 +28,110 @@ namespace zjy
 		{}
 	};
 
-	template<class K, class V>
+	
+	//迭代器
+	template<class T, class Ptr, class Ref>
+	struct TreeIterator
+	{
+		typedef RBTreeNode<T> Node;
+		typedef TreeIterator<T, Ptr, Ref> Self;
+		typedef TreeIterator<T, Ptr, Ref> Self;
+		typedef TreeIterator<T, T*, T&> iterator;
+		TreeIterator(const iterator& it)
+			:_node(it._node)
+		{}
+		TreeIterator(Node* node)
+			:_node(node)
+		{}
+		Node* _node = nullptr;
+		Self& operator++()
+		{
+			//判空
+			if (_node == nullptr)
+				return *this;
+			if (_node->_right)
+			{
+				//找到最左边那个节点
+				_node = _node->_right;
+				while (_node->_left)
+				{
+					_node = _node->_left;
+				}
+			}
+			else
+			{
+				Node* parent = _node->_parent;
+				while (parent&&_node == parent->_right)
+				{
+					_node = parent;
+					parent = _node->_parent;
+				}
+				_node = parent;
+			}
+			return *this;
+		}
+		//解引用
+		Ref operator*()
+		{
+			return _node->_data;
+		}
+		//箭头
+		Ptr operator->()
+		{
+			return &(_node->_data);
+		}
+
+		bool operator!=(const Self& s)
+		{
+			return _node != s._node;
+		}
+
+	};
+
+	//底层红黑树
+	template<class K, class T,class KeyOfT>
 	class RBTree
 	{
-		typedef  RBTreeNode<K, V> Node;
 	public:
-		bool Insert(const pair<K, V>& kv)
+
+		typedef  RBTreeNode<T> Node;
+		typedef	 TreeIterator<T, T*, T&> Iterator;
+		typedef	 TreeIterator<T, const T*, const T&> const_Iterator;
+	
+		pair<Iterator,bool> Insert(const T& data)
 		{
 			if (_root == nullptr)
 			{
-				_root = new Node(kv);
+				_root = new Node(data);
 				_root->_col = BLACK;
-				return true;
+				return make_pair(_root,true);
 			}
 			Node* cur = _root;
 			Node* parent = nullptr;
-			//找到新增kv的插入位置
+			KeyOfT kot;
+			//找到新增data的插入位置
 			while (cur)
 			{
-				if (kv.first > cur->_kv.first)
+				
+				if (kot(data) > kot(cur->_data))
 				{
 					parent = cur;
 					cur = cur->_right;
 				}
-				else if (kv.first < cur->_kv.first)
+				else if (kot(data) < kot(cur->_data))
 				{
 					parent = cur;
 					cur = cur->_left;
 				}
 				else
 				{
-					return false;
+					return make_pair(nullptr,false);
 				}
 			}
-			//插入kv
-			cur = new Node(kv);
-			if (kv.first > parent->_kv.first)
+			//插入data
+			cur = new Node(data);
+			Node* newnode = cur;
+			if (kot(data) > kot(parent->_data))
 			{
 				parent->_right = cur;
 				//cur->_parent = parent;
@@ -164,7 +211,7 @@ namespace zjy
 
 			}
 			_root->_col = BLACK;
-			return true;
+			return make_pair(newnode,true);
 
 		}
 		//左单旋
@@ -262,8 +309,104 @@ namespace zjy
 			parent->_col = RED;
 
 		}
-		
+		Iterator begin()
+		{
+			Node* leftMin = _root;
+			while (leftMin&&leftMin->_left)
+			{
+				leftMin = leftMin->_left;
+			}
+			return Iterator(leftMin);
+		}
+		Iterator end()
+		{
+			return Iterator(nullptr);
+		}
+		const_Iterator begin()const
+		{
+			Node* leftMin = _root;
+			while (leftMin && leftMin->_left)
+			{
+				leftMin = leftMin->_left;
+			}
+			return const_Iterator(leftMin);
+		}
+		const_Iterator end()const
+		{
+			return const_Iterator(nullptr);
+		}
+
+		Node* Find(const K& Key)
+		{
+			KeyOfT kot;
+			Node* cur = _root;
+			while (cur)
+			{
+				if (Key > kot(cur->_data))
+				{
+					cur = cur->_right;
+				}
+				else if (Key < kot(cur->_data))
+				{
+					cur = cur->_left;
+				}
+				else
+				{
+					return cur;
+				}
+			}
+			return nullptr;
+
+			
+			/*const_Iterator it = begin();
+			while(it != end())
+			{
+				if (kot(it._node->_data) == Key)
+					return it;
+				++it;
+			}
+			return const_Iterator(nullptr);*/
+		}
 	private:
 		Node* _root = nullptr;
 	};
+
+	
+	//封装
+	template<class K>
+	class Set
+	{
+	public:
+		struct SetKeyOfT
+		{
+			const K& operator()(const K& Key)
+			{
+				return Key;
+			}
+		};
+		typedef typename RBTree<K, K,SetKeyOfT>::const_Iterator Iterator;
+		typedef typename RBTree<K, K,SetKeyOfT>::const_Iterator const_Iterator;
+		
+		pair<Iterator,bool> Insert(const K& Key)
+		{
+			pair<RBTree<K, K, SetKeyOfT>::Iterator,bool> ret = _t.Insert(Key);
+			return pair<Iterator, bool>(ret.first, ret.second);
+			/*return _t.Insert(Key);*/
+		}
+		Iterator begin()
+		{
+			return _t.begin();
+		}
+		Iterator end()
+		{
+			return _t.end();
+		}
+		Iterator Find(const K& Key)
+		{
+			return _t.Find(Key);
+		}
+	private:
+		RBTree<K, K,SetKeyOfT> _t;
+	};
+
 }
