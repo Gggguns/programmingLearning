@@ -26,7 +26,7 @@ namespace zjh
 			, _parent(nullptr)
 			, _col(RED)
 		{}
-	};
+	}; 
 
 	
 	//µü´úÆ÷

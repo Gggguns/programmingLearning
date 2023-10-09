@@ -26,7 +26,7 @@ void testSet1()
 	cout << endl;
 	cout << *(s.Find(8)) << endl;
 	//cout << '9' << endl;
-	set<int> s1;
+	set<int> s1; 
 }
 void testSet2()
 {
