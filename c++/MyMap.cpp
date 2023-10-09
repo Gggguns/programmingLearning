@@ -17,9 +17,21 @@ void TestMap1()
 	{
 		cout << e.first<<':'<<e.second << endl;
 	}
+
+}
+void TestMap2()
+{
+	zjh::Map<string, string> m;
+	m["sort"] = "ÅÅÐò";
+	m["left"] = "×ó±ß";
+	m["sort"] = "xxx";
+	for (auto e : m)
+	{
+		cout << e.first << ':' << e.second << endl;
+	}
 }
 int main()
 {
-	TestMap1();
+	TestMap2();
 	return 0;
 }

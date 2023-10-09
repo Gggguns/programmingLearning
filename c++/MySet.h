@@ -125,7 +125,7 @@ namespace zjh
 				}
 				else
 				{
-					return make_pair(nullptr,false);
+					return make_pair(cur,false);
 				}
 			}
 			//²åÈëdata
@@ -405,6 +405,11 @@ namespace zjh
 		{
 			return _t.Find(Key);
 		}
+		/*const K& operator[](const K& key)
+		{
+			pair<Iterator, bool> ret = _t.Insert(key);
+			return *ret.first;
+		}*/
 	private:
 		RBTree<K, K,SetKeyOfT> _t;
 	};

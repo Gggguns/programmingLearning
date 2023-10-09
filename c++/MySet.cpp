@@ -30,10 +30,23 @@ void testSet1()
 }
 void testSet2()
 {
-	set<pair<int,int>> s;
+	zjh::Set<int> s;
+	s.Insert(1);
+	s.Insert(2);
+	s.Insert(3);
+	s.Insert(4);
+	s.Insert(5);
+	s.Insert(6);
+	s.Insert(7);
+	s.Insert(8);
+	/*cout<<s[9]<<endl;*/
+	for (auto e : s)
+	{
+		cout << e << ' ';
+	}
 }
 int main()
 {
-	testSet1();
+	testSet2();
 	return 0;
 }

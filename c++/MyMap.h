@@ -125,7 +125,7 @@ namespace zjh
 				}
 				else
 				{
-					return make_pair(nullptr, false);
+					return make_pair(cur, false);
 				}
 			}
 			//≤Â»Îdata
@@ -385,7 +385,7 @@ namespace zjh
 			}
 		};
 		typedef typename RBTree<K, pair<const K,V>, MapKeyOfT>::Iterator Iterator;
-		typedef typename RBTree<K, pair<const K,V>, MapKeyOfT>::const_Iterator const_Iterator;
+		typedef typename RBTree<K, pair<const K,const V>, MapKeyOfT>::const_Iterator const_Iterator;
 
 		pair<Iterator, bool> Insert(const pair<K,V>& data)
 		{
@@ -403,8 +403,13 @@ namespace zjh
 		{
 			return _t.Find(Key);
 		}
+		V& operator[](const K& key)
+		{
+			pair<Iterator, bool> ret = _t.Insert(make_pair(key, V()));
+			return ret.first->second;
+		}
 	private:
-		RBTree<K, pair<K,V>, MapKeyOfT> _t;
+		RBTree<K, pair<const K,V>, MapKeyOfT> _t;
 	};
 
 }
