@@ -3,13 +3,13 @@
 using namespace std;
 int getmonthday(int year, int month)
 {
-	static int arr[13] = { 0,31,28,30,31,30,31,31,30,31,30,31 };
+	static int arr[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 	while (month > 12)
 	{
 		month -= 12;
 		year++;
 	}
-	while (month<0)
+	while (month < 0)
 	{
 		month += 12;
 		year--;
@@ -22,10 +22,10 @@ int getmonthday(int year, int month)
 class Date
 {
 public:
-	Date(int year=0,int month=0,int day=0)
+	Date(int year = 0, int month = 0, int day = 0)
 		:_year(year)
-		,_month(month)
-		,_day(day)
+		, _month(month)
+		, _day(day)
 	{}
 	Date(const Date& d)
 	{
@@ -89,14 +89,6 @@ public:
 			return true;
 		}
 	}
-	//¸³Öµ
-	Date& operator=(const Date& d)
-	{
-		_year = d._year;
-		_month = d._month;
-		_day = d._day;
-		return *this;
-	}
 
 
 	//ÔËËã·ûÖØÔØ
@@ -108,11 +100,13 @@ public:
 		{
 			day = -day;
 			d = d - day;
+			return d;
 		}
 		d._day += day;
+		//cout << d._year<<' '<<d._month<<' '<<d._day << endl;
 		while (d._day > getmonthday(d._year, d._month))
 		{
-			d._day -= getmonthday(d._year,d._month);
+			d._day -= getmonthday(d._year, d._month);
 			d._month += 1;
 			while (d._month > 12)
 			{
@@ -131,6 +125,7 @@ public:
 		{
 			day = -day;
 			d = d + day;
+			return d;
 		}
 		d._day -= day;
 		while (d._day < 0)
@@ -149,7 +144,7 @@ public:
 	int operator-(Date& d)
 	{
 		int i = 0;
-		int sign = -1;
+		int sign = 1;
 		Date Max(d);
 		Date Min(*this);
 		if (*this > d)
@@ -158,11 +153,12 @@ public:
 			Min = d;
 			sign = -sign;
 		}
-		while ( Min<Max )
+		while (Min < Max)
 		{
 			Min = Min + 1;
 			i++;
 		}
+		int x;
 		return i * sign;
 	}
 private:
@@ -172,10 +168,10 @@ private:
 };
 int main()
 {
-	int num1 = 0,num2=0;
-	cin >> num1>>num2;
+	int num1 = 0, num2 = 0;
+	cin >> num1 >> num2;
 	Date d1(num1 / 10000, ((num1 / 100) % 100), num1 % 100);
 	Date d2(num2 / 10000, ((num2 / 100) % 100), num2 % 100);
-	cout << d1 - d2 << endl;
+	cout << d1 - d2+1 << endl;
 	return 0;
 }
