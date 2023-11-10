@@ -57,9 +57,114 @@ void testSwap3()
 	int b = 20;
 	cout << Add(a, b) << endl;
 }
+
+//先定义参数列表
+template<class Type>
+//定义类模板
+struct Stack
+{
+public:
+	bool InitStack()
+	{
+		_size = 0;
+		_ptr = (Type*)malloc(sizeof(Type) * 4);
+		if (_ptr!=NULL)
+		{
+			_capacity = 4;
+		}
+		else
+		{
+			_capacity = 0;
+		}
+		return true;
+	}
+	//入栈
+	bool Push(Type val)
+	{
+		if (_size == _capacity)
+		{
+			int newcapacity = _capacity > 0 ? 2 * _capacity : 4;
+			Type* ptr = (Type*)realloc(_ptr, sizeof(Type) * newcapacity);
+			if (ptr==NULL)
+			{
+				return false;
+			}
+			_ptr = ptr;
+			ptr = NULL;
+			_capacity = newcapacity;
+		}
+		_ptr[_size++] = val;
+		return true;
+	}
+	
+	//出栈
+	bool Pop()
+	{
+		//...
+		if (_size)
+		{
+			_size--;
+			return true;
+		}
+		return false;
+	}
+
+	//栈顶元素
+	Type Top()
+	{
+		return _ptr[_size - 1];
+	}
+
+	//判空
+	bool EmptyStack()
+	{
+		return _size == 0;
+	}
+private:
+	Type* _ptr;
+	int _size;
+	int _capacity;
+};
+
+void testStack1()
+{
+	Stack<int> s;
+	s.InitStack();
+	s.Push(1);
+	s.Push(2);
+	s.Push(3);
+	s.Push(4);
+	s.Push(5);
+	s.Push(6);
+	s.Push(7);
+	while (!s.EmptyStack())
+	{
+		cout << s.Top() << ' ';
+		s.Pop();
+	}
+}
+void testStack2()
+{
+	//Stack在这里与之前不同，不是类型，而是类模板，Stack<int> 这样才是类型
+	Stack<double> s;
+	s.InitStack();
+	s.Push(1.8);
+	s.Push(5.2);
+	s.Push(3.3);
+	s.Push(4.5);
+	s.Push(4.5);
+	s.Push(6.6);
+	s.Push(7.3);
+	while (!s.EmptyStack())
+	{
+		cout << s.Top() << ' ';
+		s.Pop();
+	}
+}
 int main()
 {
-	testSwap3();
+	//testSwap3();
+	testStack2();
 
 	return 0;
 }
