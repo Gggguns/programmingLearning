@@ -6,7 +6,7 @@ using namespace std;
 class Solution {
 public:
     int totalFruit(vector<int>& fruits) {
-        int left = -1, right = 0;
+        int left = -1, right = 0; 
         int n = fruits.size();
         unordered_map<int, int> hash;
         int Ret = 0;
