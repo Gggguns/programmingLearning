@@ -8,7 +8,7 @@ public:
     vector<int> findAnagrams(string s, string p) {
         int len = p.size(), n = s.size();
         string str;
-        int left = -1, right = 0;
+        int left = -1, right = 0; 
         unordered_map<char, int> phash, shash;
         vector<int> v;
         for (auto e : p)phash[e]++;
