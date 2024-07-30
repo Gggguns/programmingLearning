@@ -6,8 +6,35 @@
 #include <fcntl.h>
 
 int main(){
+  int fd1 = open("log1.txt", O_WRONLY | O_CREAT);
+  int fd2 = open("log2.txt", O_WRONLY | O_CREAT);
+  int fd3 = open("log3.txt", O_WRONLY | O_CREAT);
+  int fd4 = open("log4.txt", O_WRONLY | O_CREAT);
+  printf("fd1-> %d\n", fd1);
+  printf("fd2-> %d\n", fd2);
+  printf("fd3-> %d\n", fd3);
+  printf("fd4-> %d\n", fd4);
   return 0;
 }
+
+//int main(){
+//
+//  printf("stdin->fd: %d\n", stdin->_fileno);
+//  printf("stdout->fd: %d\n", stdout->_fileno);
+//  printf("stderr->fd: %d\n", stderr->_fileno);
+//  return 0;
+//}
+
+//int main(){
+//  //int fd = open("log.txt",O_RDONLY);
+//  char buffer[1024];
+//  ssize_t s = read(0, buffer, sizeof(buffer));
+//  //ssize_t s = read(fd, buffer, sizeof(buffer));
+//  if(s < 0)return 1;
+//  buffer[s] = '\0';
+//  printf("echo : %s\n", buffer);
+//  return 0;
+//}
 
 //int main(){
 //  close(1);
