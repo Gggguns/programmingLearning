@@ -5,6 +5,8 @@
 #include <string>
 #include <unistd.h>
 #include <assert.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "Task.hpp"
 
 
@@ -31,12 +33,15 @@ void slaver(){
             if(cmdcode >= 0 && cmdcode < tasks.size())tasks[cmdcode]();//执行任务
         }
 
+        if(n == 0)break;
     }
 }
 //输出 *
 //输入 const &
 //输入输出 &
 void InitProcessPool(std::vector<channel> *channels){
+    //version2: 确保每个子进程都只有一个写端
+    std::vector<int> oldfds;//记录子进程多余的写端
     for(int i = 0; i<processnum; i++){
         int pipefd[2]; //临时空间
         int n = pipe(pipefd);  
@@ -45,9 +50,17 @@ void InitProcessPool(std::vector<channel> *channels){
 
         pid_t id = fork();
         if(id == 0){//child
+            std::cout << "child: " << getpid() << " close history fd: ";//提示信息，便于观察关闭情况
+            for(auto fd : oldfds){
+                std::cout << fd << " ";
+                close(fd);
+            }
+            std::cout << std::endl;//控制打印格式
+
             close(pipefd[1]); //关闭写端
             dup2(pipefd[0],0);//将管道的读端重定向到0，这样slaver就不用传参了，直接从0读
             slaver();  //等待指令 
+            std::cout << "process: " << getpid() << " quit" <<std::endl;
             exit(0);
         }
         
@@ -57,6 +70,8 @@ void InitProcessPool(std::vector<channel> *channels){
         //增加channel字段
         std::string name = "process-"+std::to_string(i);
         channels->push_back(channel(pipefd[1], id, name));
+        oldfds.push_back(pipefd[1]); //记录打开过的写端
+        sleep(1); //别人子进程创建太快
     }
 }
 
@@ -106,6 +121,28 @@ void ctrlSlaver(const std::vector<channel> &channels){
      }
 }
 
+void QuitProcess(const std::vector<channel> &channels){
+    
+    for(const auto &c : channels){
+        close(c._cmdfd);//关闭管道的写端
+        waitpid(c._slaverid, nullptr, 0);//回收子进程
+    }
+    
+    // //version1
+    // int last = channels.size()-1;
+    // for(int i = last; i >= 0; i--){
+    //     close(channels[i]._cmdfd);
+    //     waitpid(channels[i]._slaverid, nullptr, 0);
+    // }
+
+    // for(const auto &c : channels){
+    //     close(c._cmdfd);//关闭管道的写端
+    // }
+    // for(const auto &c : channels){
+    //     waitpid(c._slaverid, nullptr, 0);//回收子进程
+    // }
+}
+
 int main(){
     srand(time(nullptr)^getpid()^1023);//种一个随机数种子，乘别的数是为了增大离散程度
     LoadTask(&tasks);
@@ -119,6 +156,7 @@ int main(){
     ctrlSlaver(channels);
 
     //3.清理收尾
+    QuitProcess(channels);
 
     return 0;
 }
