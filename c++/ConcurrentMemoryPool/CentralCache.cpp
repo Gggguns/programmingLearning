@@ -69,6 +69,7 @@ Span* CentralCache::GetOneSpan(SpanList& list, size_t size)
 	PageCache::GetInstance()->_pageMtx.lock();
 	Span* span = PageCache::GetInstance()->NewSpan(SizeClass::NumMovePage(size));
 	span->_isUse = true;
+	span->_objSize = size;
 	PageCache::GetInstance()->_pageMtx.unlock();
 	
 	//对获取Span进行切分，不需要加锁，因为这会其他线程访问不到这个span
@@ -93,7 +94,11 @@ Span* CentralCache::GetOneSpan(SpanList& list, size_t size)
 		start += size;
 		i++;
 	}
-	std::cout << i << std::endl;
+
+	//尾部指向空
+	NextObj(tail) = nullptr;
+
+	//std::cout << i << std::endl;
 	//切好span以后，需要把span挂到桶里面去的时候，再加锁
 	list._mtx.lock();
 	//将span放入哈希桶
@@ -111,7 +116,9 @@ void CentralCache::ReleaseListToSpans(void* start, size_t size)
 	while (start)
 	{
 		void* next = NextObj(start);
+		//PageCache::GetInstance()->_pageMtx.lock();
 		Span* span = PageCache::GetInstance()->MapObjectToSpan(start);
+		//PageCache::GetInstance()->_pageMtx.unlock();
 		//头插归还
 		NextObj(start) = span->_freeList;
 		span->_freeList = start;

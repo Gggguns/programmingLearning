@@ -1,5 +1,7 @@
 #pragma once
 #include "Common.h"
+#include "ObjectPool.h"
+#include "PageMap.h"
 
 class PageCache
 {
@@ -23,8 +25,12 @@ public:
 private:
 	
 	SpanList _spanLists[NPAGES];
+	//span内存池
+	ObjectPool<Span> _spanPool;
 	
-	std::unordered_map<PAGE_ID, Span*> _idSpanMap;
+	//std::unordered_map<PAGE_ID, Span*> _idSpanMap;
+	//这里我们直接写死了
+	TCMalloc_PageMap1<32 - PAGE_SHIFT> _idSpanMap;
 
 	PageCache()
 	{}

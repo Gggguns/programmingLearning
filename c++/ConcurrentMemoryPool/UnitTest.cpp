@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "ObjectPool.hpp"
+#include "ObjectPool.h"
 #include "ConcurrentAlloc.h"
 
 void Alloc1()
@@ -70,11 +70,88 @@ void TestAddressShift()
 	}
 }
 
-int main()
+void TestConcurrentAlloc3()
 {
-	//TestObjectPool();
-	//TLSTest();
-	//TestConcurrentAlloc2();
-	TestAddressShift();
-	return 0;
+	void* p1 = ConcurrentAlloc(6);
+	void* p2 = ConcurrentAlloc(8);
+	void* p3 = ConcurrentAlloc(1);
+	void* p4 = ConcurrentAlloc(7);
+	void* p5 = ConcurrentAlloc(8);
+	void* p6 = ConcurrentAlloc(8);
+	void* p7 = ConcurrentAlloc(8);
+
+	std::cout << p1 << std::endl;
+	std::cout << p2 << std::endl;
+	std::cout << p3 << std::endl;
+	std::cout << p4 << std::endl;
+	std::cout << p5 << std::endl;
+
+	ConcurrentFree(p1);
+	ConcurrentFree(p2);
+	ConcurrentFree(p3);
+	ConcurrentFree(p4);
+	ConcurrentFree(p5);
+	ConcurrentFree(p6);
+	ConcurrentFree(p7);
 }
+
+//申请释放多线程
+void MultiThreadAlloc1()
+{
+	std::vector<void*> v;
+	for (size_t i = 0;i < 7;i++)
+	{
+		void* ptr = ConcurrentAlloc(6);
+		v.push_back(ptr);
+	}
+
+	for (auto e : v)
+	{
+		ConcurrentFree(e);
+	}
+}
+
+void MultiThreadAlloc2()
+{
+	std::vector<void*> v;
+	for (size_t i = 0;i < 7;i++)
+	{
+		void* ptr = ConcurrentAlloc(16);
+		v.push_back(ptr);
+	}
+
+	for (auto e : v)
+	{
+		ConcurrentFree(e);
+	}
+} 
+
+void TestMultiThread()
+{
+	std::thread t1(MultiThreadAlloc1);
+	std::thread t2(MultiThreadAlloc2);
+
+	t1.join();
+	t2.join();
+}
+
+//大于258KB
+void BigAlloc()
+{
+	void* p1 = ConcurrentAlloc(257 * 1024);
+	ConcurrentFree(p1);
+
+	void* p2 = ConcurrentAlloc(129 * 8 * 1024);
+	ConcurrentFree(p2);
+}
+
+//int main()
+//{
+//	//TestObjectPool();
+//	//TLSTest();
+//	//TestConcurrentAlloc3();
+//	//TestAddressShift();
+//	//TestMultiThread();
+//	BigAlloc();
+//	return 0;
+//}

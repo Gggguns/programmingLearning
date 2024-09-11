@@ -8,6 +8,7 @@
 #include <cassert>
 #include <algorithm>
 #include <unordered_map>
+#include <atomic>
 
 //这里需要先判断_WIN64，64环境下既有_WIN32，也有_WIN64。32环境下，只有_WIN32
 #ifdef _WIN64
@@ -19,7 +20,7 @@
 #endif
 
 
-static const size_t MAX_BYTES = 254 * 1024;//thread cache的最大申请空间
+static const size_t MAX_BYTES = 256 * 1024;//thread cache的最大申请空间
 static const size_t NFREELIST = 208;//thread cache和central cache的哈希桶个数
 static const size_t NPAGES = 129;//page cache的哈希桶个数，把下标为零的位置空出来不用
 static const size_t PAGE_SHIFT = 13;//一个页的大小
@@ -44,6 +45,17 @@ inline static void* SystemAlloc(size_t kpage)
 	{
 		throw std::bad_alloc();
 	}
+	return  ptr;
+}
+
+//直接向堆，释放内存
+inline static void SystemFree(void* ptr)
+{
+#ifdef _WIN32
+	VirtualFree(ptr, 0, MEM_RELEASE);
+#else
+	// sbrk unmmap等
+#endif
 }
 
 static void*& NextObj(void* obj)
@@ -82,9 +94,22 @@ public:
 		{
 			end = NextObj(end);
 		}
-
+		
 		_freeList = NextObj(end);
 		NextObj(end) = nullptr;
+
+		////条件断点
+		//size_t j = 0;
+		//auto cur = start;
+		//while (cur)
+		//{
+		//	j++;
+		//	cur = NextObj(cur);
+		//}
+		//if (j != n)
+		//{
+		//	int x = 0;
+		//}
 		_size -= n;
 	}
 
@@ -113,7 +138,7 @@ public:
 private:
 	void* _freeList = nullptr;
 	size_t _maxSize = 1;
-	size_t _size;
+	size_t _size = 0;
 };
 
 //计算对象大小的对齐映射规则
@@ -175,9 +200,8 @@ public:
 		}
 		else
 		{
-			assert(false);
+			return _RoundUp(size, 1 << PAGE_SHIFT);
 		}
-		return -1;
 	}
 
 	//Index的子函数
@@ -276,6 +300,7 @@ struct Span
 	Span* _next = nullptr;
 	Span* _prev = nullptr;
 
+	size_t _objSize = 0; //切好小对象的大小
 	size_t _useCount = 0; //切好小块内存，被分配给thread cache的计数
 	void* _freeList = nullptr;  //切好的小块内存的自由链表
 
