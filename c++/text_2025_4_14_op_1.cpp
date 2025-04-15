@@ -15,27 +15,38 @@ public:
         for (auto e : words)hash2[e]++;
         string substring;
         int length = step * m;
-        while (right < size)
+        for (int i = 0; i < step; i++)
         {
-            // slide  the whidown
-            substring = s.substr(right, step);
-            hash1[substring]++;
-            right += step;
-            if (hash1[substring] == hash2[substring])n++;
-            if (right - left - 1 > length)
+            right = i;
+            left = i - 1;
+            n = 0;
+            hash1.clear();
+            while (right < size)
             {
-                left++;
-                substring = s.substr(left, step);
-                hash1[substring]--;
-                if (hash1[substring] < hash2[substring])n--;
-                left += step;
+                // slide  the whidown
+                substring = s.substr(right, step);
+                hash1[substring]++;
+                right += step;
+                if (hash1[substring] <= hash2[substring])n++;
+                if (right - left - 1 > length)
+                {
+                    left++;
+                    substring = s.substr(left, step);
+                    hash1[substring]--;
+                    if (hash1[substring] < hash2[substring])n--;
+                    left += (step - 1);
+                }
+                if (m == n) ret.push_back(left + 1);
             }
-            if (m == n) ret.push_back(left + 1);
         }
         return ret;
     }
 };
 int main()
 {
+    Solution S;
+    string str = "lingmindraboofooowingdingbarrwingmonkeypoundcake";
+    vector<string> words = { "fooo","barr","wing","ding","wing" };
+    S.findSubstring(str, words);
     return 0;
 }
