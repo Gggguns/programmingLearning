@@ -7,23 +7,27 @@ class Solution {
 public:
     void sortColors(vector<int>& nums) {
         int size = nums.size();
-        int left = -1, right = 0, cur = 0;
-        for (cur = 0; cur < size; cur++)
+        int left = -1, right = size, cur = 0;
+        while (cur < right)
         {
             if (nums[cur] == 0)
             {
                 left++;
-                swap(nums[left + 1], nums[cur]);
+                swap(nums[left], nums[cur++]);
             }
-            if (nums[cur] == 1)
+            else if (nums[cur] == 2)
             {
-                right++;
+                right--;
                 swap(nums[right], nums[cur]);
             }
+            else cur++;
         }
     }
 };
 int main()
 {
+    vector<int> nums = { 2,0,2,1,1,0 };
+    Solution s;
+    s.sortColors(nums);
     return 0;
 }
