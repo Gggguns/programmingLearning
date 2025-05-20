@@ -26,15 +26,14 @@ public:
         {
             if (nums[start1] > nums[start2])
             {
+                count += (end1 - start1);
                 temp[end++] = nums[start2++];
-                count += (start2 - end1);
             }
             else temp[end++] = nums[start1++];
         }
         while (start1 < end1)
         {
             temp[end++] = nums[start1++];
-            count += (start2 - end1);
         }
         while (start2 < end2)temp[end++] = nums[start2++];
 
