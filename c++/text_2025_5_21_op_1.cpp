@@ -20,22 +20,32 @@ public:
         int start1 = left, end1 = mid + 1;
         int start2 = mid + 1, end2 = right + 1;
         int end = left;
+        // ¼ÆËã
+        int cur1 = left, cur2 = mid + 1;
+        while (cur1 < end1 && cur2 < end2)
+        {
+            if (nums[cur1] > nums[cur2] * 2.0)
+            {
+                ret += (end1 - cur1);
+                cur2++;
+            }
+            else cur1++;
+        }
         // ºÏ²¢
         while (start1 < end1 && start2 < end2)
         {
             if (nums[start1] > nums[start2])
             {
-                if (nums[start1] > nums[start2]*2) ret += (end1 - start1);
                 temp[end++] = nums[start2++];
             }
-            else temp[end++] = nums[start1++];
+            else
+                temp[end++] = nums[start1++];
         }
         while (start1 < end1) temp[end++] = nums[start1++];
         while (start2 < end2) temp[end++] = nums[start2++];
 
         // ¿½±´
         for (int i = left; i <= right; i++) nums[i] = temp[i];
-        int x = 0;
 
     }
     int ret = 0;
