@@ -17,7 +17,7 @@ public:
         if (slow == nullptr) return;
         ListNode* fast = head->next;
         // 找中间节点
-        while (fast)
+        while (fast && fast->next)
         {
             slow = slow->next;
             fast = fast->next;
@@ -47,9 +47,9 @@ public:
         {
             tail->next = head1;
             tail = tail->next;
+            head1 = head1->next;
             tail->next = head2;
             tail = tail->next;
-            head1 = head1->next;
             head2 = head2->next;
         }
         while (head1)
@@ -72,5 +72,15 @@ public:
 };
 int main()
 {
+    ListNode node1(1);
+    ListNode node2(2);
+    ListNode node3(3);
+    ListNode node4(4);
+    node1.next = &node2;
+    node2.next = &node3;
+    node3.next = &node4;
+    node4.next = nullptr;
+    Solution s;
+    s.reorderList(&node1);
     return 0;
 }
