@@ -9,7 +9,7 @@ public:
         int size = s.size();
         vector<vector<bool>> dp(size, vector<bool>(size));
         string retstr = "";
-        int retsize = 0;
+        int retsize = 0; 
         for (int i = size - 1; i > 0; i--)
         {
             for (int j = i; j < size; j++)
