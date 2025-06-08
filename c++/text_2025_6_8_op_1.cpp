@@ -6,52 +6,33 @@ class Solution {
 public:
     int calculate(string s) {
         vector<int> nums;
-        string str;
+        char op = '+';
         int size = s.size();
         int num = 0;
-        for (int i = 0; i < size; i++)
+        char ch;
+        int i = 0;
+        while(i < size)
         {
-            char ch = s[i];
-            if (ch == '*' || ch == '/' || ch == '-') {
-                if (str.size())
+            ch = s[i];
+            if (ch == '-' || ch == '*' || ch == '/' || ch == '+')
+            {
+                op = ch;
+                i++;
+            }
+            else if (ch >= '0' && ch <= '9')
+            {
+                while (i < size && s[i] >= '0' && s[i] <= '9')
                 {
-                    ch = str.back();
-                    str.pop_back();
-                    if (ch == '*')
-                    {
-                        num = nums.back() * num;
-                        nums.pop_back();
-                    }
-                    else if (ch == '/')
-                    {
-                        num = nums.back() / num;
-                        nums.pop_back();
-                    }
-                    else num = -num;
+                    num = num * 10 + s[i] - '0';
+                    i++;
                 }
-                nums.push_back(num);
+                if (op == '+')nums.push_back(num);
+                else if (op == '-')nums.push_back(-num);
+                else if (op == '*')nums.back() *= num;
+                else if (op == '/')nums.back() /= num;
                 num = 0;
-                str.push_back(ch);
             }
-            else if (ch >= '0' && ch <= '9')num = num * 10 + ch - '0';
-        }
-        if (str.size())
-        {
-            char ch = str.back();
-            str.pop_back();
-            if (ch == '*')
-            {
-                num = nums.back() * num;
-                nums.pop_back();
-            }
-            else if (ch == '/')
-            {
-                num = nums.back() / num;
-                nums.pop_back();
-            }
-            else num = -num;
-            nums.push_back(num);
-            num = 0;
+            else i++;
         }
         int sum = 0;
         for (auto e : nums)sum += e;
@@ -61,7 +42,7 @@ public:
 int main()
 {
     Solution s;
-    string str1 = "3 / 2";
+    string str1 = "1-1+1";
     cout << s.calculate(str1);
 	return 0;
 }
