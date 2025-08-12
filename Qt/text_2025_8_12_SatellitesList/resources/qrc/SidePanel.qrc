@@ -1,0 +1,50 @@
+<RCC>
+    <qresource prefix="/images">
+        <!-- 3D 与场景相关 -->
+        <file alias="3d_switch">../img/SidePanel/3d_switch.png</file>
+        <file alias="scene">../img/SidePanel/scene.png</file>
+        <file alias="scene_2">../img/SidePanel/scene_2.png</file>
+
+        <!-- 标绘与绘图相关 -->
+        <file alias="plot">../img/SidePanel/plot.png</file>
+        <file alias="plot_2">../img/SidePanel/plot_2.png</file>
+
+        <!-- 导航与框架相关 -->
+        <file alias="navigation">../img/SidePanel/navigation.png</file>
+        <file alias="home_left_frame">../img/SidePanel/home_left_frame.png</file>
+        <file alias="home_right_frame">../img/SidePanel/home_right_frame.png</file>
+        <file alias="home_mid_dialog">../img/SidePanel/home_mid_dialog.png</file>
+
+        <!-- 操作按钮（发送、返回等） -->
+        <file alias="send">../img/SidePanel/send.png</file>
+        <file alias="home_back">../img/SidePanel/home_back.png</file>
+        <file alias="retract">../img/SidePanel/retract.png</file>
+        <file alias="refresh">../img/SidePanel/refresh.png</file>
+        <file alias="add_new">../img/SidePanel/add_new.png</file>
+
+        <!-- 管理与信息展示 -->
+        <file alias="manage_center">../img/SidePanel/manage_center.png</file>
+        <file alias="basic_situation_bar">../img/SidePanel/basic_situation_bar.png</file>
+        <file alias="role">../img/SidePanel/role.png</file>
+        <file alias="role_2">../img/SidePanel/role_2.png</file>
+        <file alias="personnel">../img/SidePanel/personnel.png</file>
+        <file alias="header_bar">../img/SidePanel/header_bar.png</file>
+        <file alias="search">../img/SidePanel/search.png</file>
+
+        <!-- 监测与通信 -->
+        <file alias="communication">../img/SidePanel/communication.png</file>
+        <file alias="env_monitor">../img/SidePanel/env_monitor.png</file>
+        <file alias="display_bar">../img/SidePanel/display_bar.png</file>
+
+        <!-- 消息与需求 -->
+        <file alias="message">../img/SidePanel/message.png</file>
+        <file alias="message_2">../img/SidePanel/message_2.png</file>
+        <file alias="demand">../img/SidePanel/demand.png</file>
+        <file alias="demand_2">../img/SidePanel/demand_2.png</file>
+
+        <!-- 智能问答 -->
+        <file alias="ai_chat">../img/SidePanel/ai_chat.png</file>
+        <file alias="ai_chat_2">../img/SidePanel/ai_chat_2.png</file>
+        <file alias="ai_chat_icon">../img/SidePanel/ai_chat_icon.png</file>
+    </qresource>
+</RCC>
